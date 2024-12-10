@@ -13,6 +13,8 @@ namespace Battleship
         Texture2D hitTexture;
         Texture2D missTexture;
 
+        bool mReleased = true;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -28,6 +30,8 @@ namespace Battleship
             board = new Board();
             board.PlaceShip(2, 2, 4, true);
             board.PlaceShip(5, 5, 3, false);
+            board.PlaceShip(0, 0, 2, true);
+            board.PlaceShip(7, 8, 1, false);
         }
 
         protected override void LoadContent()
@@ -41,14 +45,23 @@ namespace Battleship
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            
             MouseState mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed)
+            if(mouseState.LeftButton == ButtonState.Pressed && mouseState.X < 320 && mouseState.Y < 320 && mReleased == true)
             {
                 int x = mouseState.X / 32;
                 int y = mouseState.Y / 32;
                 board.Shoot(x, y);
+                mReleased = false;
+            }
+            else
+            {
+                mReleased = false;
+            }
+
+            if(mouseState.LeftButton == ButtonState.Released)
+            {
+                mReleased = true;
             }
             
 
