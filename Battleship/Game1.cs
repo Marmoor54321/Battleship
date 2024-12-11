@@ -16,6 +16,7 @@ namespace Battleship
         Texture2D skyTexture;
 
         const int sec_board_start_x = 352;
+        const int sec_board_end_x = 672;
 
         bool mReleased = true;
         bool turn2 = false;
@@ -75,7 +76,7 @@ namespace Battleship
                     else
                     turn2 = true;
                 }
-                else if(mouseState.X > 352 && mouseState.X < 672 && mouseState.Y < 320 && turn2)
+                else if(mouseState.X > 352 && mouseState.X < sec_board_end_x && mouseState.Y < 320 && turn2)
                 {
                     int x = (mouseState.X-sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
