@@ -67,24 +67,31 @@ namespace Battleship
                 {
                     int x = mouseState.X / 32;
                     int y = mouseState.Y / 32;
-                    board1.Shoot(x, y);
-                    mReleased = false;
+                    if(board1.Shoot(x, y))
+                    {
+
+                    }
+                    
+                    else
                     turn2 = true;
                 }
                 else if(mouseState.X > 352 && mouseState.X < 672 && mouseState.Y < 320 && turn2)
                 {
                     int x = (mouseState.X-sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
-                    board2.Shoot(x, y);
-                    mReleased = false;
+                    if(board2.Shoot(x, y))
+                    {
+
+                    }
+                    else
                     turn2 = false;
 
-                }    
-            }
-            else
-            {
+                }
                 mReleased = false;
             }
+           
+                
+            
 
             if(mouseState.LeftButton == ButtonState.Released)
             {
