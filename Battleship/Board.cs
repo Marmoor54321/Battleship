@@ -41,6 +41,10 @@ public class Board
 
     public bool Shoot(int x, int y)
     {
+        if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
+        {
+            return false;
+        }
         if (cells[x, y].HasShip)
         {
             cells[x, y].IsHit = true;

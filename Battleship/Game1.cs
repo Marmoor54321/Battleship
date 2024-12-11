@@ -8,12 +8,18 @@ namespace Battleship
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Board board;
+        Board board1;
+        Board board2;
         Texture2D cellTexture;
         Texture2D hitTexture;
         Texture2D missTexture;
+        Texture2D skyTexture;
+
+        const int sec_board_start_x = 352;
 
         bool mReleased = true;
+        bool turn2 = false;
+        
 
         public Game1()
         {
@@ -27,11 +33,17 @@ namespace Battleship
             
 
             base.Initialize();
-            board = new Board();
-            board.PlaceShip(2, 2, 4, true);
-            board.PlaceShip(5, 5, 3, false);
-            board.PlaceShip(0, 0, 2, true);
-            board.PlaceShip(7, 8, 1, false);
+            board1 = new Board();
+            board2 = new Board();
+            board1.PlaceShip(2, 2, 4, true);
+            board1.PlaceShip(5, 5, 3, false);
+            board1.PlaceShip(0, 0, 2, true);
+            board1.PlaceShip(7, 8, 2, false);
+
+            board2.PlaceShip(3, 5, 2, false);
+            board2.PlaceShip(7, 3, 3, true);
+            board2.PlaceShip(8, 4, 2, false);
+            board2.PlaceShip(9, 6, 4, false);
         }
 
         protected override void LoadContent()
@@ -41,18 +53,33 @@ namespace Battleship
             cellTexture = Content.Load<Texture2D>("cell");
             hitTexture = Content.Load<Texture2D>("hit");
             missTexture = Content.Load<Texture2D>("miss");
+            skyTexture = Content.Load<Texture2D>("sky");
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             
             MouseState mouseState = Mouse.GetState();
-            if(mouseState.LeftButton == ButtonState.Pressed && mouseState.X < 320 && mouseState.Y < 320 && mReleased == true)
+            if(mouseState.LeftButton == ButtonState.Pressed && mReleased == true)
             {
-                int x = mouseState.X / 32;
-                int y = mouseState.Y / 32;
-                board.Shoot(x, y);
-                mReleased = false;
+                if (mouseState.X < 320 && mouseState.Y < 320 && !turn2)
+                {
+                    int x = mouseState.X / 32;
+                    int y = mouseState.Y / 32;
+                    board1.Shoot(x, y);
+                    mReleased = false;
+                    turn2 = true;
+                }
+                else if(mouseState.X > 352 && mouseState.X < 672 && mouseState.Y < 320 && turn2)
+                {
+                    int x = (mouseState.X-sec_board_start_x) / 32;
+                    int y = mouseState.Y / 32;
+                    board2.Shoot(x, y);
+                    mReleased = false;
+                    turn2 = false;
+
+                }    
             }
             else
             {
@@ -63,7 +90,9 @@ namespace Battleship
             {
                 mReleased = true;
             }
-            
+
+
+           
 
             base.Update(gameTime);
         }
@@ -73,12 +102,34 @@ namespace Battleship
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+            _spriteBatch.Draw(skyTexture, new Vector2(0, 0), Color.White);
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    Cell cell = board.GetCell(x, y);
+                    Cell cell = board1.GetCell(x, y);
                     Vector2 position = new Vector2(x * 32, y * 32);
+                    if (cell.IsHit)
+                    {
+                        _spriteBatch.Draw(hitTexture, position, Color.White);
+                    }
+                    else if (cell.IsMiss)
+                    {
+                        _spriteBatch.Draw(missTexture, position, Color.White);
+                    }
+                    else
+                    {
+                        _spriteBatch.Draw(cellTexture, position, Color.White);
+                    }
+                }
+            }
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    Cell cell = board2.GetCell(x, y);
+                    Vector2 position = new Vector2(x * 32 + sec_board_start_x, y * 32);
                     if (cell.IsHit)
                     {
                         _spriteBatch.Draw(hitTexture, position, Color.White);
