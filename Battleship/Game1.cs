@@ -68,9 +68,9 @@ namespace Battleship
                 {
                     int x = mouseState.X / 32;
                     int y = mouseState.Y / 32;
-                    if(board1.Shoot(x, y))
+                    if(board1.Shoot(x, y)==true)
                     {
-
+                        turn2 = false;
                     }
                     
                     else
@@ -80,9 +80,9 @@ namespace Battleship
                 {
                     int x = (mouseState.X-sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
-                    if(board2.Shoot(x, y))
+                    if(board2.Shoot(x, y)==true)
                     {
-
+                        turn2 = true;
                     }
                     else
                     turn2 = false;
