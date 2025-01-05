@@ -8,6 +8,7 @@ public class Board
 {
     private const int Size = 10;
     private Cell[,] cells;
+
     public Board()
     {
         cells = new Cell[Size, Size];
@@ -20,40 +21,50 @@ public class Board
         }
     }
 
-
-    public void PlaceShip(int x, int y, int length, bool horizontal)
+    // Umieszczanie statku na planszy
+    public void PlaceShip(Ship ship, int startX, int startY, bool horizontal)
     {
-        if (horizontal)
+        int index = 0;
+        foreach (var part in GetParts(ship))
         {
-            for (int i = 0; i < length; i++)
+            if (horizontal)
             {
-                cells[x + i, y].HasShip = true;
+                cells[startX + index, startY].ShipComponent = part;
             }
-        }
-        else
-        {
-            for (int i = 0; i < length; i++)
+            else
             {
-                cells[x, y + i].HasShip = true;
+                cells[startX, startY + index].ShipComponent = part;
             }
+            index++;
         }
     }
 
+    private static List<ShipComponent> GetParts(Ship ship)
+    {
+        // Zakładamy, że Ship przechowuje swoje części w polu "parts".
+        return ship.GetParts();
+    }
+
+
+
+    // Strzał na planszy
     public bool Shoot(int x, int y)
     {
         if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
         {
             return false;
         }
-        if (cells[x, y].HasShip)
+
+        var cell = cells[x, y];
+        if (cell.ShipComponent != null && !cell.IsHit)
         {
-            cells[x, y].IsHit = true;
+            cell.Shoot(); // Trafienie
             return true;
         }
-        cells[x, y].IsMiss = true;
+
+        cell.IsMiss = true; // Pudło
         return false;
     }
-
 
     public Cell GetCell(int x, int y)
     {

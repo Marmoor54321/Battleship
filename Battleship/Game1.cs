@@ -36,15 +36,15 @@ namespace Battleship
             base.Initialize();
             board1 = new Board();
             board2 = new Board();
-            board1.PlaceShip(2, 2, 4, true);
-            board1.PlaceShip(5, 5, 3, false);
-            board1.PlaceShip(0, 0, 2, true);
-            board1.PlaceShip(7, 8, 2, false);
+            Ship ship1 = new Ship();
+            ShipPart part1 = new ShipPart();
+            ShipPart part2 = new ShipPart();
+            ShipPart part3 = new ShipPart();
+            ship1.AddPart(part1);
+            ship1.AddPart(part2);
+            ship1.AddPart(part3);
+            board1.PlaceShip(ship1, 0,0, true);
 
-            board2.PlaceShip(3, 5, 2, false);
-            board2.PlaceShip(7, 3, 3, true);
-            board2.PlaceShip(8, 4, 2, false);
-            board2.PlaceShip(9, 6, 4, false);
         }
 
         protected override void LoadContent()

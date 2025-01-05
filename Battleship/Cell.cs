@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 public class Cell
 {
-    public bool HasShip {  get; set; }
+    public ShipComponent ShipComponent { get; set; } // Nowy atrybut
     public bool IsHit {  get; set; }
     public bool IsMiss {  get; set; }
 
     public Cell()
     {
-        HasShip = false;
+        ShipComponent = null;
         IsHit = false;
         IsMiss = false;
+    }
+    public void Shoot()
+    {
+        if (ShipComponent != null && !IsHit)
+        {
+            ShipComponent.TakeHit();
+            IsHit = true;
+        }
+        else if (!IsMiss)
+        {
+            IsMiss = true;
+        }
     }
 }
