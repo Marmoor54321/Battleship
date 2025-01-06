@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Battleship;
+
 public class ShipPart : ShipComponent
 {
     private bool isHit;
