@@ -25,7 +25,9 @@ namespace Battleship
         const int sec_board_end_x = 672;
 
         bool mReleased = true;
+        bool mRightReleased = true;
         bool turn2 = false;
+        private bool placingForBoard2 = false;
 
         private SpriteFont font;
         
@@ -67,95 +69,119 @@ namespace Battleship
 
         protected override void Update(GameTime gameTime)
         {
-
-
-            
             MouseState mouseState = Mouse.GetState();
 
             if (placingShips)
             {
+                Board currentBoard = placingForBoard2 ? board2 : board1;
+                int x, y;
+
+                if (placingForBoard2 && mouseState.X > sec_board_start_x && mouseState.X < sec_board_end_x)
+                {
+                    x = (mouseState.X - sec_board_start_x) / 32;
+                    y = mouseState.Y / 32;
+                }
+                else if (!placingForBoard2 && mouseState.X < 320)
+                {
+                    x = mouseState.X / 32;
+                    y = mouseState.Y / 32;
+                }
+                else
+                {
+                    return;
+                }
+
                 if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
                 {
-                    int x = mouseState.X / 32;
-                    int y = mouseState.Y / 32;
-
                     int size = shipSizes[currentShipIndex];
-                    if (board1.CanPlaceShip(size, x, y, horizontal))
+                    if (currentBoard.CanPlaceShip(size, x, y, horizontal))
                     {
                         Ship ship = new Ship();
                         for (int i = 0; i < size; i++)
                         {
                             ship.AddPart(new ShipPart());
                         }
-                        board1.PlaceShip(ship, x, y, horizontal);
+                        currentBoard.PlaceShip(ship, x, y, horizontal);
                         currentShipIndex++;
                         if (currentShipIndex >= shipSizes.Length)
                         {
-                            placingShips = false;
+                            if (placingForBoard2)
+                            {
+                                placingShips = false;
+                            }
+                            else
+                            {
+                                placingForBoard2 = true;
+                                currentShipIndex = 0;
+                            }
                         }
                     }
                     mReleased = false;
                 }
-                if (mouseState.RightButton == ButtonState.Pressed && mReleased)
+
+                if (mouseState.RightButton == ButtonState.Pressed && mRightReleased)
                 {
                     horizontal = !horizontal;
-                    mReleased = false;
+                    mRightReleased = false;
                 }
             }
             else
             {
-                
                 base.Update(gameTime);
             }
 
-            if (mouseState.LeftButton == ButtonState.Released && mouseState.RightButton == ButtonState.Released)
+            if (mouseState.LeftButton == ButtonState.Released)
             {
                 mReleased = true;
             }
+            if (mouseState.RightButton == ButtonState.Released)
+            {
+                mRightReleased = true;
+            }
 
-        
-            if(mouseState.LeftButton == ButtonState.Pressed && mReleased == true)
+            if (mouseState.LeftButton == ButtonState.Pressed && mReleased == true)
             {
                 if (mouseState.X < 320 && mouseState.Y < 320 && !turn2)
                 {
                     int x = mouseState.X / 32;
                     int y = mouseState.Y / 32;
-                    if(board1.Shoot(x, y)==true)
+                    if (board1.Shoot(x, y) == true)
                     {
                         turn2 = false;
                     }
-                    
+
                     else
-                    turn2 = true;
+                        turn2 = true;
                 }
-                else if(mouseState.X > 352 && mouseState.X < sec_board_end_x && mouseState.Y < 320 && turn2)
+                else if (mouseState.X > 352 && mouseState.X < sec_board_end_x && mouseState.Y < 320 && turn2)
                 {
-                    int x = (mouseState.X-sec_board_start_x) / 32;
+                    int x = (mouseState.X - sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
-                    if(board2.Shoot(x, y)==true)
+                    if (board2.Shoot(x, y) == true)
                     {
                         turn2 = true;
                     }
                     else
-                    turn2 = false;
+                        turn2 = false;
 
                 }
                 mReleased = false;
             }
-           
-                
-            
 
-            if(mouseState.LeftButton == ButtonState.Released)
+
+
+
+            if (mouseState.LeftButton == ButtonState.Released)
             {
                 mReleased = true;
             }
 
 
-           
+
 
             base.Update(gameTime);
         }
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -165,7 +191,15 @@ namespace Battleship
             _spriteBatch.Draw(skyTexture, new Vector2(0, 0), Color.White);
             if (placingShips)
             {
-                _spriteBatch.DrawString(font, "Place your ships!", new Vector2(10, 340), Color.White);
+                _spriteBatch.DrawString(font, placingForBoard2 ? "Place your ships on board 2!" : "Place your ships on board 1!", new Vector2(10, 330), Color.White);
+                if (horizontal)
+                {
+                    _spriteBatch.DrawString(font, "Horizontal", new Vector2(250, 330), Color.Pink);
+                }
+                else
+                {
+                    _spriteBatch.DrawString(font, "Vertical", new Vector2(250, 330), Color.Pink);
+                }
             }
             for (int x = 0; x < 10; x++)
             {
