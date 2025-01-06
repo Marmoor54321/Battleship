@@ -8,10 +8,12 @@ public class Board
 {
     private const int Size = 10;
     private Cell[,] cells;
+    private List<Ship> ships;
 
     public Board()
     {
         cells = new Cell[Size, Size];
+        ships = new List<Ship>();
         for (int x = 0; x < Size; x++)
         {
             for (int y = 0; y < Size; y++)
@@ -24,6 +26,7 @@ public class Board
     // Umieszczanie statku na planszy
     public void PlaceShip(Ship ship, int startX, int startY, bool horizontal)
     {
+        ships.Add(ship);
         int index = 0;
         foreach (var part in GetParts(ship))
         {
@@ -37,6 +40,13 @@ public class Board
             }
             index++;
         }
+    }
+
+    
+
+    public List<Ship> GetShips()
+    {
+        return ships;
     }
 
     private static List<ShipComponent> GetParts(Ship ship)

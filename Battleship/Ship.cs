@@ -50,4 +50,6 @@ public class Ship : ShipComponent
         // Statek jest zatopiony, jeśli wszystkie jego części są zatopione
         return parts.All(part => part.IsSunk());
     }
+  
+
 }

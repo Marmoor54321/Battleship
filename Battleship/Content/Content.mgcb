@@ -25,6 +25,13 @@
 /processorParam:TextureFormat=Color
 /build:Cell.png
 
+#begin Fonts/font1.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/font1.spritefont
+
 #begin Hit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,6 +55,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Miss.png
+
+#begin ShipPart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ShipPart.png
 
 #begin sky.png
 /importer:TextureImporter

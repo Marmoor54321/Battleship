@@ -14,12 +14,15 @@ namespace Battleship
         Texture2D hitTexture;
         Texture2D missTexture;
         Texture2D skyTexture;
+        Texture2D shipPartTexture;
 
         const int sec_board_start_x = 352;
         const int sec_board_end_x = 672;
 
         bool mReleased = true;
         bool turn2 = false;
+
+        private SpriteFont font;
         
 
         public Game1()
@@ -44,6 +47,24 @@ namespace Battleship
             ship1.AddPart(part2);
             ship1.AddPart(part3);
             board1.PlaceShip(ship1, 0,0, true);
+            
+            Ship ship11 = new Ship();
+            ShipPart part11 = new ShipPart();
+            ShipPart part12 = new ShipPart();
+            ShipPart part13 = new ShipPart();
+            ship11.AddPart(part11);
+            ship11.AddPart(part12);
+            ship11.AddPart(part13);
+            board1.PlaceShip(ship11, 5, 3, true);
+
+            Ship ship2 = new Ship();
+            ShipPart part21 = new ShipPart();
+            ShipPart part22= new ShipPart();
+            ShipPart part23 = new ShipPart();
+            ship2.AddPart(part21);
+            ship2.AddPart(part22);
+            ship2.AddPart(part23);
+            board2.PlaceShip(ship2, 0, 0, true);
 
         }
 
@@ -54,8 +75,9 @@ namespace Battleship
             cellTexture = Content.Load<Texture2D>("cell");
             hitTexture = Content.Load<Texture2D>("hit");
             missTexture = Content.Load<Texture2D>("miss");
+            shipPartTexture = Content.Load<Texture2D>("shippart");
             skyTexture = Content.Load<Texture2D>("sky");
-
+            font = Content.Load<SpriteFont>("Fonts/font1");
         }
 
         protected override void Update(GameTime gameTime)
@@ -152,10 +174,29 @@ namespace Battleship
                     }
                 }
             }
+
+            Vector2 positionText = new Vector2(10, 350);
+            foreach (var ship in board1.GetShips())
+            {
+                string status = ship.IsSunk() ? "Sunk" : "Not Sunk";
+                _spriteBatch.DrawString(font, $"Ship: {status}", positionText, Color.White);
+                positionText.Y += 20;
+            }
+
+            positionText = new Vector2(370, 350);
+            foreach (var ship in board2.GetShips())
+            {
+                string status = ship.IsSunk() ? "Sunk" : "Not Sunk";
+                _spriteBatch.DrawString(font, $"Ship: {status}", positionText, Color.White);
+                positionText.Y += 20;
+            }
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
+
+        }
+
         
-    }
     }
 }
