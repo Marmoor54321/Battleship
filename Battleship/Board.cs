@@ -23,7 +23,6 @@ public class Board
         }
     }
 
-    // Umieszczanie statku na planszy
     public void PlaceShip(Ship ship, int startX, int startY, bool horizontal)
     {
         ships.Add(ship);
@@ -33,16 +32,84 @@ public class Board
             if (horizontal)
             {
                 cells[startX + index, startY].ShipComponent = part;
+                cells[startX + index, startY].HasShip = true;
             }
             else
             {
                 cells[startX, startY + index].ShipComponent = part;
+                cells[startX, startY + index].HasShip = true;
             }
             index++;
         }
     }
 
-    
+    public void PlaceFleetRandom()
+    {
+        int[] shipSizes = { 5, 4, 3, 3, 2 };
+        Random rand = new Random();
+
+        foreach (int size in shipSizes)
+        {
+            bool placed = false;
+            while (!placed)
+            {
+                int startX = rand.Next(Size);
+                int startY = rand.Next(Size);
+                bool horizontal = rand.Next(2) == 0;
+                if (CanPlaceShip(size, startX, startY, horizontal))
+                {
+                    Ship ship = new Ship();
+                    for (int i = 0; i < size; i++)
+                    {
+                        ship.AddPart(new ShipPart());
+                    }
+                    PlaceShip(ship, startX, startY, horizontal);
+                    placed = true;
+                }
+            }
+        }
+    }
+
+    //public void PlaceFleet()
+    //{
+    //    int[] shipSizes = { 5, 4, 3, 3, 2 };
+    //    Random rand = new Random();
+
+    //    foreach (int size in shipSizes)
+    //    {
+    //        bool placed = false;
+    //        while (!placed)
+    //        {
+    //            int startX = 
+    //            int startY = 
+    //            bool horizontal = rand.Next(2) == 0;
+    //            if (CanPlaceShip(size, startX, startY, horizontal))
+    //            {
+    //                Ship ship = new Ship();
+    //                for (int i = 0; i < size; i++)
+    //                {
+    //                    ship.AddPart(new ShipPart());
+    //                }
+    //                PlaceShip(ship, startX, startY, horizontal);
+    //                placed = true;
+    //            }
+    //        }
+    //    }
+    //}
+
+    private bool CanPlaceShip(int size, int startX, int startY, bool horizontal)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            int x = horizontal ? startX + i : startX;
+            int y = horizontal ? startY : startY + i;
+            if (x >= Size || y >= Size || cells[x, y].ShipComponent != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public List<Ship> GetShips()
     {
@@ -51,13 +118,9 @@ public class Board
 
     private static List<ShipComponent> GetParts(Ship ship)
     {
-        // Zakładamy, że Ship przechowuje swoje części w polu "parts".
         return ship.GetParts();
     }
 
-
-
-    // Strzał na planszy
     public bool Shoot(int x, int y)
     {
         if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
@@ -68,11 +131,11 @@ public class Board
         var cell = cells[x, y];
         if (cell.ShipComponent != null && !cell.IsHit)
         {
-            cell.Shoot(); // Trafienie
+            cell.Shoot();
             return true;
         }
 
-        cell.IsMiss = true; // Pudło
+        cell.IsMiss = true;
         return false;
     }
 

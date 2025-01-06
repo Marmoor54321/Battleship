@@ -13,7 +13,6 @@ public class ShipPart : ShipComponent
     public override void TakeHit()
     {
         isHit = true;
-        Console.WriteLine("A part of the ship has been hit!");
     }
 
     public override bool IsSunk()

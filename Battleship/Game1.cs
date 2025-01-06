@@ -39,32 +39,35 @@ namespace Battleship
             base.Initialize();
             board1 = new Board();
             board2 = new Board();
-            Ship ship1 = new Ship();
-            ShipPart part1 = new ShipPart();
-            ShipPart part2 = new ShipPart();
-            ShipPart part3 = new ShipPart();
-            ship1.AddPart(part1);
-            ship1.AddPart(part2);
-            ship1.AddPart(part3);
-            board1.PlaceShip(ship1, 0,0, true);
+            //Ship ship1 = new Ship();
+            //ShipPart part1 = new ShipPart();
+            //ShipPart part2 = new ShipPart();
+            //ShipPart part3 = new ShipPart();
+            //ship1.AddPart(part1);
+            //ship1.AddPart(part2);
+            //ship1.AddPart(part3);
+            //board1.PlaceShip(ship1, 0,0, true);
             
-            Ship ship11 = new Ship();
-            ShipPart part11 = new ShipPart();
-            ShipPart part12 = new ShipPart();
-            ShipPart part13 = new ShipPart();
-            ship11.AddPart(part11);
-            ship11.AddPart(part12);
-            ship11.AddPart(part13);
-            board1.PlaceShip(ship11, 5, 3, true);
+            //Ship ship11 = new Ship();
+            //ShipPart part11 = new ShipPart();
+            //ShipPart part12 = new ShipPart();
+            //ShipPart part13 = new ShipPart();
+            //ship11.AddPart(part11);
+            //ship11.AddPart(part12);
+            //ship11.AddPart(part13);
+            //board1.PlaceShip(ship11, 5, 3, true);
 
-            Ship ship2 = new Ship();
-            ShipPart part21 = new ShipPart();
-            ShipPart part22= new ShipPart();
-            ShipPart part23 = new ShipPart();
-            ship2.AddPart(part21);
-            ship2.AddPart(part22);
-            ship2.AddPart(part23);
-            board2.PlaceShip(ship2, 0, 0, true);
+            board1.PlaceFleetRandom();
+
+            //Ship ship2 = new Ship();
+            //ShipPart part21 = new ShipPart();
+            //ShipPart part22= new ShipPart();
+            //ShipPart part23 = new ShipPart();
+            //ship2.AddPart(part21);
+            //ship2.AddPart(part22);
+            //ship2.AddPart(part23);
+            //board2.PlaceShip(ship2, 0, 0, true);
+            board2.PlaceFleetRandom();
 
         }
 
@@ -147,6 +150,10 @@ namespace Battleship
                     {
                         _spriteBatch.Draw(missTexture, position, Color.White);
                     }
+                    else if(cell.HasShip)
+                    {
+                        _spriteBatch.Draw(shipPartTexture, position, Color.White);
+                    }
                     else
                     {
                         _spriteBatch.Draw(cellTexture, position, Color.White);
@@ -167,6 +174,10 @@ namespace Battleship
                     else if (cell.IsMiss)
                     {
                         _spriteBatch.Draw(missTexture, position, Color.White);
+                    }
+                    else if (cell.HasShip)
+                    {
+                        _spriteBatch.Draw(shipPartTexture, position, Color.White);
                     }
                     else
                     {
