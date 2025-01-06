@@ -97,7 +97,7 @@ public class Board
     //    }
     //}
 
-    private bool CanPlaceShip(int size, int startX, int startY, bool horizontal)
+    public bool CanPlaceShip(int size, int startX, int startY, bool horizontal)
     {
         for (int i = 0; i < size; i++)
         {

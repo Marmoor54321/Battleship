@@ -16,6 +16,11 @@ namespace Battleship
         Texture2D skyTexture;
         Texture2D shipPartTexture;
 
+        private bool placingShips = true;
+        private int[] shipSizes = { 5, 4, 3, 3, 2 };
+        private int currentShipIndex = 0;
+        private bool horizontal = true;
+
         const int sec_board_start_x = 352;
         const int sec_board_end_x = 672;
 
@@ -39,35 +44,12 @@ namespace Battleship
             base.Initialize();
             board1 = new Board();
             board2 = new Board();
-            //Ship ship1 = new Ship();
-            //ShipPart part1 = new ShipPart();
-            //ShipPart part2 = new ShipPart();
-            //ShipPart part3 = new ShipPart();
-            //ship1.AddPart(part1);
-            //ship1.AddPart(part2);
-            //ship1.AddPart(part3);
-            //board1.PlaceShip(ship1, 0,0, true);
+       
+
+            //board1.PlaceFleetRandom();
+
             
-            //Ship ship11 = new Ship();
-            //ShipPart part11 = new ShipPart();
-            //ShipPart part12 = new ShipPart();
-            //ShipPart part13 = new ShipPart();
-            //ship11.AddPart(part11);
-            //ship11.AddPart(part12);
-            //ship11.AddPart(part13);
-            //board1.PlaceShip(ship11, 5, 3, true);
-
-            board1.PlaceFleetRandom();
-
-            //Ship ship2 = new Ship();
-            //ShipPart part21 = new ShipPart();
-            //ShipPart part22= new ShipPart();
-            //ShipPart part23 = new ShipPart();
-            //ship2.AddPart(part21);
-            //ship2.AddPart(part22);
-            //ship2.AddPart(part23);
-            //board2.PlaceShip(ship2, 0, 0, true);
-            board2.PlaceFleetRandom();
+            //board2.PlaceFleetRandom();
 
         }
 
@@ -85,8 +67,53 @@ namespace Battleship
 
         protected override void Update(GameTime gameTime)
         {
+
+
             
             MouseState mouseState = Mouse.GetState();
+
+            if (placingShips)
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
+                {
+                    int x = mouseState.X / 32;
+                    int y = mouseState.Y / 32;
+
+                    int size = shipSizes[currentShipIndex];
+                    if (board1.CanPlaceShip(size, x, y, horizontal))
+                    {
+                        Ship ship = new Ship();
+                        for (int i = 0; i < size; i++)
+                        {
+                            ship.AddPart(new ShipPart());
+                        }
+                        board1.PlaceShip(ship, x, y, horizontal);
+                        currentShipIndex++;
+                        if (currentShipIndex >= shipSizes.Length)
+                        {
+                            placingShips = false;
+                        }
+                    }
+                    mReleased = false;
+                }
+                if (mouseState.RightButton == ButtonState.Pressed && mReleased)
+                {
+                    horizontal = !horizontal;
+                    mReleased = false;
+                }
+            }
+            else
+            {
+                
+                base.Update(gameTime);
+            }
+
+            if (mouseState.LeftButton == ButtonState.Released && mouseState.RightButton == ButtonState.Released)
+            {
+                mReleased = true;
+            }
+
+        
             if(mouseState.LeftButton == ButtonState.Pressed && mReleased == true)
             {
                 if (mouseState.X < 320 && mouseState.Y < 320 && !turn2)
@@ -136,6 +163,10 @@ namespace Battleship
 
             _spriteBatch.Begin();
             _spriteBatch.Draw(skyTexture, new Vector2(0, 0), Color.White);
+            if (placingShips)
+            {
+                _spriteBatch.DrawString(font, "Place your ships!", new Vector2(10, 340), Color.White);
+            }
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 10; y++)
