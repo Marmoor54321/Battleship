@@ -44,7 +44,10 @@ public class Board
             index++;
         }
     }
-
+    public bool AreAllShipsSunk()
+    {
+        return ships.All(ship => ship.IsSunk());
+    }
     public void PlaceFleetRandom()
     {
         int[] shipSizes = { 5, 4, 3, 3, 2 };
@@ -123,23 +126,28 @@ public class Board
         return ship.GetParts();
     }
 
-    public bool Shoot(int x, int y)
+public bool Shoot(int x, int y)
+{
+    if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
     {
-        if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
-        {
-            return false;
-        }
-
-        var cell = cells[x, y];
-        if (cell.ShipComponent != null && !cell.IsHit)
-        {
-            cell.Shoot();
-            return true;
-        }
-
-        cell.IsMiss = true;
-        return false;
+        return false; // Wyjście, jeśli strzał jest poza planszą.
     }
+
+    var cell = cells[x, y];
+    if (cell.IsHit || cell.IsMiss)
+    {
+        return true; // Pole już trafione lub oznaczone jako chybione.
+    }
+
+    if (cell.ShipComponent != null)
+    {
+        cell.Shoot();
+        return true; // Trafiono statek.
+    }
+
+    cell.IsMiss = true; // Strzał chybiony.
+    return false;
+}
 
     public Cell GetCell(int x, int y)
     {

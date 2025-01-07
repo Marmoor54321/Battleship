@@ -131,6 +131,7 @@ namespace Battleship
         {
             MouseState mouseState = Mouse.GetState();
 
+
             if (placingShips)
             {
                 Board currentBoard = placingForBoard2 ? board2 : board1;
@@ -187,6 +188,20 @@ namespace Battleship
             }
             else
             {
+                if (board1.AreAllShipsSunk())
+                {
+                    Console.WriteLine("Gracz 2 wygrywa!");
+                    _game.ChangeState(new MenuState(_game)); // Powrót do menu
+                    return;
+                }
+
+                if (board2.AreAllShipsSunk())
+                {
+                    Console.WriteLine("Gracz 1 wygrywa!");
+                    _game.ChangeState(new MenuState(_game)); // Powrót do menu
+                    return;
+                }
+
                 if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
                 {
                     if (mouseState.X < 320 && mouseState.Y < 320 && !turn2)
@@ -239,7 +254,7 @@ namespace Battleship
             if (placingShips)
             {
                 spriteBatch.DrawString(font, placingForBoard2 ? "Place your ships on board 2!" : "Place your ships on board 1!", new Vector2(10, 330), Color.White);
-                spriteBatch.DrawString(font, horizontal ? "Horizontal" : "Vertical", new Vector2(250, 330), Color.Pink);
+                spriteBatch.DrawString(font, horizontal ? "Horizontal" : "Vertical", new Vector2(300, 330), Color.Red);
             }
 
             for (int x = 0; x < 10; x++)
@@ -264,16 +279,18 @@ namespace Battleship
             Vector2 positionText = new Vector2(10, 350);
             foreach (var ship in board1.GetShips())
             {
+                int shipLength = ship.GetParts().Count;
                 string status = ship.IsSunk() ? "Sunk" : "Not Sunk";
-                spriteBatch.DrawString(font, $"Ship: {status}", positionText, Color.White);
+                spriteBatch.DrawString(font, $"Ship (Length: {shipLength}): {status}", positionText, Color.White);
                 positionText.Y += 20;
             }
 
             positionText = new Vector2(370, 350);
             foreach (var ship in board2.GetShips())
             {
+                int shipLength = ship.GetParts().Count;
                 string status = ship.IsSunk() ? "Sunk" : "Not Sunk";
-                spriteBatch.DrawString(font, $"Ship: {status}", positionText, Color.White);
+                spriteBatch.DrawString(font, $"Ship (Length: {shipLength}): {status}", positionText, Color.White);
                 positionText.Y += 20;
             }
 
