@@ -7,10 +7,12 @@ public class Player
     public int Wins { get; private set; } // Liczba wygranych meczów
     public int Hit { get; private set; } // Liczba zestrzelonych statków
     public List<GameHistory> GameHistories { get; private set; } // Historia gier
+    public AIStrategy AIStrategy { get; private set; }
 
-    public Player(string name)
+    public Player(string name, AIStrategy aiStrategy = null)
     {
         Name = name;
+        AIStrategy = aiStrategy;
         Wins = 0;
         Hit = 0;
         GameHistories = new List<GameHistory>();
@@ -41,16 +43,9 @@ public class Player
         Hit = 0;
     }
 
-    // Wyświetlenie statystyk gracza (opcjonalne, dla debugowania)
-    public void DisplayStats()
+    public void SetAIStrategy(AIStrategy strategy)
     {
-        Console.WriteLine($"Gracz: {Name}");
-        Console.WriteLine($"Wygrane mecze: {Wins}");
-        Console.WriteLine($"Zestrzelone statki: {Hit}");
-        Console.WriteLine("Historia gier:");
-        foreach (var history in GameHistories)
-        {
-            Console.WriteLine(history);
-        }
+        AIStrategy = strategy;
     }
+
 }

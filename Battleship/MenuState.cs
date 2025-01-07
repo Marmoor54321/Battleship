@@ -47,7 +47,7 @@ public class MenuState : IGameState
             else if (mouseState.X > playerVsAIPosition.X && mouseState.X < playerVsAIPosition.X + playerVsAISize.X
                 && mouseState.Y > playerVsAIPosition.Y && mouseState.Y < playerVsAIPosition.Y + playerVsAISize.Y)
             {
-                Console.WriteLine("Player vs AI mode is not implemented yet!");
+                _game.ChangeState(new PlayerVsAISubMenuState(_game));
             }
 
             mReleased = false;

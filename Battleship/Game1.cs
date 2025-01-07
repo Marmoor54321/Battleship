@@ -20,6 +20,7 @@ namespace Battleship
 
         public Player Player1 { get; private set; }
         public Player Player2 { get; private set; }
+        public Player PlayerEASY { get; private set; }
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -32,6 +33,7 @@ namespace Battleship
             base.Initialize();
             Player1 = new Player("Player 1");
             Player2 = new Player("Player 2");
+            PlayerEASY = new Player("BOB", new EasyAI());
 
             ChangeState(new MenuState(this, Player1, Player2));
           
@@ -41,6 +43,7 @@ namespace Battleship
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             (_currentState as MenuState)?.LoadContent();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -62,6 +65,14 @@ namespace Battleship
             if (newState is MenuState menuState)
             {
                 menuState.LoadContent();
+            }
+            else if (newState is PlayerVsAISubMenuState subMenuState)
+            {
+                subMenuState.LoadContent();
+            }
+            else if (newState is PlayerVsEasyState easyState)
+            {
+                easyState.LoadContent();
             }
             else if (newState is PlayerVsPlayerState pvpState)
             {
