@@ -11,9 +11,11 @@ public class Board
     private const int Size = 10;
     private Cell[,] cells;
     private List<Ship> ships;
+    public Player Owner { get; private set; }
 
-    public Board()
+    public Board(Player owner)
     {
+        Owner = owner;
         cells = new Cell[Size, Size];
         ships = new List<Ship>();
         for (int x = 0; x < Size; x++)
@@ -74,33 +76,6 @@ public class Board
             }
         }
     }
-
-    //public void PlaceFleet()
-    //{
-    //    int[] shipSizes = { 5, 4, 3, 3, 2 };
-    //    Random rand = new Random();
-
-    //    foreach (int size in shipSizes)
-    //    {
-    //        bool placed = false;
-    //        while (!placed)
-    //        {
-    //            int startX = 
-    //            int startY = 
-    //            bool horizontal = rand.Next(2) == 0;
-    //            if (CanPlaceShip(size, startX, startY, horizontal))
-    //            {
-    //                Ship ship = new Ship();
-    //                for (int i = 0; i < size; i++)
-    //                {
-    //                    ship.AddPart(new ShipPart());
-    //                }
-    //                PlaceShip(ship, startX, startY, horizontal);
-    //                placed = true;
-    //            }
-    //        }
-    //    }
-    //}
 
     public bool CanPlaceShip(int size, int startX, int startY, bool horizontal)
     {
