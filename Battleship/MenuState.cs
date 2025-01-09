@@ -33,9 +33,13 @@ public class MenuState : IGameState
         Vector2 titleSize = _font.MeasureString("BATTLESHIP MENU");
         Vector2 playerVsPlayerSize = _font.MeasureString("Player vs Player");
         Vector2 playerVsAISize = _font.MeasureString("Player vs AI");
+        Vector2 AIVsAISize= _font.MeasureString("AI vs AI");
+        Vector2 GameHistorySize = _font.MeasureString("Game History");
 
         Vector2 playerVsPlayerPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsPlayerSize.X) / 2, 150);
         Vector2 playerVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsAISize.X) / 2, 250);
+        Vector2 AIVsAIPosition= new Vector2((_game.GraphicsDevice.Viewport.Width - AIVsAISize.X) / 2, 350);
+        Vector2 GameHistoryPosition= new Vector2(672, 20);
 
         if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
         {
@@ -49,6 +53,18 @@ public class MenuState : IGameState
             {
                 _game.ChangeState(new PlayerVsAISubMenuState(_game));
             }
+            else if (mouseState.X > AIVsAIPosition.X && mouseState.X < AIVsAIPosition.X + AIVsAISize.X
+            && mouseState.Y > AIVsAIPosition.Y && mouseState.Y < AIVsAIPosition.Y + AIVsAISize.Y)
+            {
+                _game.ChangeState(new AIVsAISubMenuState(_game));
+            }
+            else if (mouseState.X > GameHistoryPosition.X && mouseState.X < GameHistoryPosition.X + GameHistorySize.X
+            && mouseState.Y > GameHistoryPosition.Y && mouseState.Y < GameHistoryPosition.Y + GameHistorySize.Y)
+            {
+                _game.ChangeState(new GameHistoryState(_game));
+            }
+
+
 
             mReleased = false;
         }
@@ -69,6 +85,8 @@ public class MenuState : IGameState
         Vector2 titleSize = _font.MeasureString("BATTLESHIP MENU");
         Vector2 playerVsPlayerSize = _font.MeasureString("Player vs Player");
         Vector2 playerVsAISize = _font.MeasureString("Player vs AI");
+        Vector2 AIVsAISize = _font.MeasureString("AI vs AI");
+        Vector2 GameHistorySize = _font.MeasureString("Game History");
 
         // Pozycja tytułu na środku
         Vector2 titlePosition = new Vector2((_game.GraphicsDevice.Viewport.Width - titleSize.X) / 2, 50);
@@ -80,6 +98,15 @@ public class MenuState : IGameState
 
         Vector2 playerVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsAISize.X) / 2, 250);
         spriteBatch.DrawString(_font, "Player vs AI", playerVsAIPosition, Color.Yellow);
+
+        Vector2 AIVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - AIVsAISize.X) / 2, 350);
+        spriteBatch.DrawString(_font, "AI vs AI", AIVsAIPosition, Color.Yellow);
+
+        Vector2 GameHistoryPosition = new Vector2(672, 20);
+        spriteBatch.DrawString(_font, "Game History", GameHistoryPosition, Color.Yellow);
+
+
+
 
         // Statystyki graczy
         Vector2 statsPosition = new Vector2(50, 350);

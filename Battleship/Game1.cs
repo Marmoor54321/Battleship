@@ -21,6 +21,7 @@ namespace Battleship
         public Player Player1 { get; private set; }
         public Player Player2 { get; private set; }
         public Player PlayerEASY { get; private set; }
+        public Player PlayerEASY2 {  get; private set; }
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -34,6 +35,7 @@ namespace Battleship
             Player1 = new Player("Player 1");
             Player2 = new Player("Player 2");
             PlayerEASY = new Player("BOB", new EasyAI());
+            PlayerEASY2 = new Player("ROB", new EasyAI());
 
             ChangeState(new MenuState(this, Player1, Player2));
           
@@ -78,7 +80,22 @@ namespace Battleship
             {
                 pvpState.LoadContent();
             }
+            else if (newState is AIVsAISubMenuState AIState)
+            {
+                AIState.LoadContent();
+            }
+            else if (newState is EasyVsEasyState AIEasyState)
+            {
+                AIEasyState.LoadContent();
+            }
+            else if (newState is GameHistoryState HistoryState)
+            {
+                HistoryState.LoadContent();
+            }
+
+
+
         }
-        
+
     }
 }
