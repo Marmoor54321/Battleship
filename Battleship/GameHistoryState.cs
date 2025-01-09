@@ -57,6 +57,28 @@ public class GameHistoryState : IGameState
         Vector2 MenuPosition = new Vector2(700, 450);
         spriteBatch.DrawString(_font, "Menu", MenuPosition, Color.Yellow);
 
+        // Wyświetlanie historii gier dla obu graczy
+        Vector2 startPosition = new Vector2(50, 50);
+        spriteBatch.DrawString(_font, "Player 1 Game History:", startPosition, Color.Black);
+        startPosition.Y += 30;
+
+        foreach (var gameHistory in _game.Player1.GameHistories)
+        {
+            string historyText = $"{gameHistory.GameDate}: Opponent {gameHistory.OpponentName}, Win: {gameHistory.IsWin}, Hits: {gameHistory.Hits}";
+            spriteBatch.DrawString(_font, historyText, startPosition, Color.Black);
+            startPosition.Y += 30;
+        }
+
+        startPosition.Y += 50; // Przerwa między graczami
+        spriteBatch.DrawString(_font, "Player 2 Game History:", startPosition, Color.Black);
+        startPosition.Y += 30;
+
+        foreach (var gameHistory in _game.Player2.GameHistories)
+        {
+            string historyText = $"{gameHistory.GameDate}: Opponent {gameHistory.OpponentName}, Win: {gameHistory.IsWin}, Hits: {gameHistory.Hits}";
+            spriteBatch.DrawString(_font, historyText, startPosition, Color.Black);
+            startPosition.Y += 30;
+        }
 
         spriteBatch.End();
     }

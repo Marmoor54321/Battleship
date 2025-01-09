@@ -2,10 +2,10 @@
 
 public class GameHistory
 {
-    public DateTime GameDate { get; private set; } // Data gry
-    public string OpponentName { get; private set; } // Imię przeciwnika
-    public bool IsWin { get; private set; } // Czy gracz wygrał grę
-    public int Hits { get; private set; } // Liczba statków zestrzelonych w grze
+    public DateTime GameDate { get; private set; }
+    public string OpponentName { get; private set; }
+    public bool IsWin { get; private set; }
+    public int Hits { get; private set; }
 
     public GameHistory(string opponentName, bool isWin, int hits)
     {

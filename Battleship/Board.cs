@@ -79,16 +79,47 @@ public class Board
 
     public bool CanPlaceShip(int size, int startX, int startY, bool horizontal)
     {
+        // Sprawdzanie, czy statek mieści się na planszy
+        if (horizontal)
+        {
+            if (startX + size > Size) return false;
+        }
+        else
+        {
+            if (startY + size > Size) return false;
+        }
+
+        // Sprawdzanie, czy wszystkie komórki statku i ich sąsiedzi są wolne
         for (int i = 0; i < size; i++)
         {
             int x = horizontal ? startX + i : startX;
             int y = horizontal ? startY : startY + i;
-            if (x >= Size || y >= Size || cells[x, y].ShipComponent != null)
+
+            if (x < 0 || x >= Size || y < 0 || y >= Size || cells[x, y].HasShip)
             {
-                return false;
+                return false; // Komórka zajęta przez statek
+            }
+
+            // Sprawdzanie sąsiadujących komórek (również po rogach)
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    int neighborX = x + dx;
+                    int neighborY = y + dy;
+
+                    if (neighborX >= 0 && neighborX < Size && neighborY >= 0 && neighborY < Size)
+                    {
+                        if (cells[neighborX, neighborY].HasShip)
+                        {
+                            return false; // Sąsiednia komórka zajęta przez statek
+                        }
+                    }
+                }
             }
         }
-        return true;
+
+        return true; // Wszystkie komórki są wolne
     }
 
     public List<Ship> GetShips()

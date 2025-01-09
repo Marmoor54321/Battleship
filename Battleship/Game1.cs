@@ -22,6 +22,10 @@ namespace Battleship
         public Player Player2 { get; private set; }
         public Player PlayerEASY { get; private set; }
         public Player PlayerEASY2 {  get; private set; }
+
+        public List<GameHistory> GameHistories { get; private set; }
+        public GameHistoryCaretaker Caretaker { get; private set; }
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);

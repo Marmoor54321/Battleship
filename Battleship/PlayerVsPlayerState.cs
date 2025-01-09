@@ -48,6 +48,7 @@ public class PlayerVsPlayerState : IGameState
         MouseState mouseState = Mouse.GetState();
 
 
+
         if (placingShips)
         {
             Board currentBoard = placingForBoard2 ? board2 : board1;
@@ -104,10 +105,22 @@ public class PlayerVsPlayerState : IGameState
         }
         else
         {
+
+
             if (board1.AreAllShipsSunk())
             {
                 Console.WriteLine("Gracz 2 wygrywa!");
                 _game.Player2.AddWin();
+                _game.Player2.AddGameHistory(_game.Player1.Name, true, _game.Player2.Hit);
+                _game.Player1.AddGameHistory(_game.Player2.Name, false, _game.Player1.Hit);
+
+                // Zapis historii gry
+                var caretaker = new GameHistoryCaretaker();
+                caretaker.Save(_game.Player2.SaveHistoryToMemento());
+
+                _game.Player1.ResetHits();
+                _game.Player2.ResetHits();
+
                 _game.ChangeState(new MenuState(_game, _game.Player1, _game.Player2));
                 return;
             }
@@ -116,9 +129,19 @@ public class PlayerVsPlayerState : IGameState
             {
                 Console.WriteLine("Gracz 1 wygrywa!");
                 _game.Player1.AddWin();
+                _game.Player1.AddGameHistory(_game.Player2.Name, true, _game.Player1.Hit);
+                _game.Player2.AddGameHistory(_game.Player1.Name, false, _game.Player2.Hit);
+
+                // Zapis historii gry
+                var caretaker = new GameHistoryCaretaker();
+                caretaker.Save(_game.Player1.SaveHistoryToMemento());
+                _game.Player1.ResetHits();
+                _game.Player2.ResetHits();
                 _game.ChangeState(new MenuState(_game, _game.Player1, _game.Player2));
                 return;
             }
+
+
 
             if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
             {

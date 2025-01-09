@@ -37,15 +37,32 @@ public class Player
     }
 
     // Metoda resetująca statystyki gracza
-    public void ResetStats()
+    public void ResetHits()
     {
-        Wins = 0;
         Hit = 0;
     }
 
     public void SetAIStrategy(AIStrategy strategy)
     {
         AIStrategy = strategy;
+    }
+
+    public void AddGameHistory(string opponentName, bool isWin, int hits)
+    {
+        GameHistories.Add(new GameHistory(opponentName, isWin, hits));
+    }
+
+    public GameHistoryMemento SaveHistoryToMemento()
+    {
+        return new GameHistoryMemento(GameHistories);
+    }
+
+    public void RestoreHistoryFromMemento(GameHistoryMemento memento)
+    {
+        if (memento != null)
+        {
+            GameHistories = memento.GameHistories;
+        }
     }
 
 }
