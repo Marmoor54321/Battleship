@@ -28,13 +28,33 @@ public class GameHistoryState : IGameState
         Vector2 MenuSize = _font.MeasureString("Menu");
         Vector2 MenuPosition = new Vector2(700, 450);
 
-
         if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
         {
+            // Powrót do menu
             if (mouseState.X > MenuPosition.X && mouseState.X < MenuPosition.X + MenuSize.X
                 && mouseState.Y > MenuPosition.Y && mouseState.Y < MenuPosition.Y + MenuSize.Y)
             {
                 _game.ChangeState(new MenuState(_game, _game.Player1, _game.Player2));
+            }
+            else
+            {
+                // Sprawdź, czy kliknięto grę w historii
+                Vector2 startPosition = new Vector2(50, 80); // Pozycja pierwszej gry
+                for (int i = 0; i < _game.GameHistories.Count; i++)
+                {
+                    string historyText = $"{_game.GameHistories[i].GameDate}: {_game.GameHistories[i].Player1Name} vs {_game.GameHistories[i].Player2Name}, Winner: {(_game.GameHistories[i].Player1Won ? _game.GameHistories[i].Player1Name : _game.GameHistories[i].Player2Name)}";
+                    Vector2 textSize = _font.MeasureString(historyText);
+
+                    if (mouseState.X > startPosition.X && mouseState.X < startPosition.X + textSize.X &&
+                        mouseState.Y > startPosition.Y && mouseState.Y < startPosition.Y + textSize.Y)
+                    {
+                        // Usuń wybraną grę z historii
+                        _game.RemoveGameFromHistory(i);
+                        break;
+                    }
+
+                    startPosition.Y += 30; // Przesuń pozycję do następnej gry
+                }
             }
 
             mReleased = false;
@@ -43,6 +63,15 @@ public class GameHistoryState : IGameState
         if (mouseState.LeftButton == ButtonState.Released)
         {
             mReleased = true;
+        }
+        KeyboardState keyboardState = Keyboard.GetState();
+        if (keyboardState.IsKeyDown(Keys.Z))
+        {
+            var memento = _game.Caretaker.Restore();
+            if (memento != null)
+            {
+                _game.GameHistories = memento.GameHistories;
+            }
         }
     }
 
@@ -54,17 +83,17 @@ public class GameHistoryState : IGameState
 
         Vector2 MenuSize = _font.MeasureString("Menu");
         Vector2 MenuPosition = new Vector2(700, 450);
-        
         spriteBatch.DrawString(_font, "Menu", MenuPosition, Color.Yellow);
 
-        // Wyświetlanie ogólnej historii gier
-        Vector2 startPosition = new Vector2(50, 50);
-        spriteBatch.DrawString(_font, "Game History:", startPosition, Color.Black);
-        startPosition.Y += 30;
+        spriteBatch.DrawString(_font, "Game History", new Vector2(50, 20), Color.Black);
+        spriteBatch.DrawString(_font, "Click record to delete. Press Z to undo.", new Vector2(50, 40), Color.Black);
 
+
+        // Wyświetlanie historii gier
+        Vector2 startPosition = new Vector2(50, 80);
         foreach (var gameHistory in _game.GameHistories)
         {
-            string historyText = $"{gameHistory.GameDate}: {gameHistory.Player1Name} vs {gameHistory.Player2Name}, {gameHistory.Player1Name} hits: {gameHistory.Player1Hits}, {gameHistory.Player2Name} hits: {gameHistory.Player2Hits}, Winner: {(gameHistory.Player1Won ? gameHistory.Player1Name : gameHistory.Player2Name)}";
+            string historyText = $"{gameHistory.GameDate}: {gameHistory.Player1Name} vs {gameHistory.Player2Name}, Winner: {(gameHistory.Player1Won ? gameHistory.Player1Name : gameHistory.Player2Name)}";
             spriteBatch.DrawString(_font, historyText, startPosition, Color.Black);
             startPosition.Y += 30;
         }

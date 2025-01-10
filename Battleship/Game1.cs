@@ -23,7 +23,8 @@ namespace Battleship
         public Player PlayerEASY { get; private set; }
         public Player PlayerEASY2 {  get; private set; }
 
-        public List<GameHistory> GameHistories { get; private set; }
+        public List<GameHistory> GameHistories { get; set; } = new List<GameHistory>();
+
         public GameHistoryCaretaker Caretaker { get; private set; }
 
 
@@ -42,7 +43,17 @@ namespace Battleship
             GameHistories.Add(history);
             Caretaker.Save(new GameHistoryMemento(GameHistories));
         }
+        public void RemoveGameFromHistory(int index)
+        {
+            if (index >= 0 && index < GameHistories.Count)
+            {
+                // Zapisz stan przed modyfikacją
+                Caretaker.Save(new GameHistoryMemento(GameHistories));
 
+                // Usuń grę z historii
+                GameHistories.RemoveAt(index);
+            }
+        }
 
         public void RestoreHistory()
     {
