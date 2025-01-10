@@ -111,8 +111,7 @@ public class PlayerVsPlayerState : IGameState
             {
                 Console.WriteLine("Gracz 2 wygrywa!");
                 _game.Player2.AddWin();
-                _game.Player2.AddGameHistory(_game.Player1.Name, true, _game.Player2.Hit);
-                _game.Player1.AddGameHistory(_game.Player2.Name, false, _game.Player1.Hit);
+                _game.AddGameToHistory(_game.Player1.Name, _game.Player2.Name, false, _game.Player1.Hit, _game.Player2.Hit);
 
                 // Zapis historii gry
                 var caretaker = new GameHistoryCaretaker();
@@ -129,8 +128,7 @@ public class PlayerVsPlayerState : IGameState
             {
                 Console.WriteLine("Gracz 1 wygrywa!");
                 _game.Player1.AddWin();
-                _game.Player1.AddGameHistory(_game.Player2.Name, true, _game.Player1.Hit);
-                _game.Player2.AddGameHistory(_game.Player1.Name, false, _game.Player2.Hit);
+                _game.AddGameToHistory(_game.Player1.Name, _game.Player2.Name, true, _game.Player1.Hit, _game.Player2.Hit);
 
                 // Zapis historii gry
                 var caretaker = new GameHistoryCaretaker();

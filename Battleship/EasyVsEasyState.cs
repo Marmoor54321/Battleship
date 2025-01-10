@@ -60,7 +60,10 @@ public class EasyVsEasyState : IGameState
             {
                 Console.WriteLine("Gracz 2 wygrywa!");
                 _game.PlayerEASY2.AddWin();
-                _game.ChangeState(new MenuState(_game, _game.PlayerEASY, _game.PlayerEASY2));
+            _game.AddGameToHistory(_game.PlayerEASY.Name, _game.PlayerEASY2.Name, false, _game.PlayerEASY.Hit, _game.PlayerEASY2.Hit);
+            _game.PlayerEASY.ResetHits();
+            _game.PlayerEASY2.ResetHits();
+            _game.ChangeState(new MenuState(_game, _game.PlayerEASY, _game.PlayerEASY2));
                 return;
             }
 
@@ -68,7 +71,10 @@ public class EasyVsEasyState : IGameState
             {
                 Console.WriteLine("Gracz 1 wygrywa!");
                 _game.PlayerEASY.AddWin();
-                _game.ChangeState(new MenuState(_game, _game.PlayerEASY, _game.PlayerEASY2));
+            _game.AddGameToHistory(_game.PlayerEASY.Name, _game.PlayerEASY2.Name, true, _game.PlayerEASY.Hit, _game.PlayerEASY2.Hit);
+            _game.PlayerEASY.ResetHits();
+            _game.PlayerEASY2.ResetHits();
+            _game.ChangeState(new MenuState(_game, _game.PlayerEASY, _game.PlayerEASY2));
                 return;
             }
 

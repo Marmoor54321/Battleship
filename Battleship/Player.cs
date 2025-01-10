@@ -47,10 +47,7 @@ public class Player
         AIStrategy = strategy;
     }
 
-    public void AddGameHistory(string opponentName, bool isWin, int hits)
-    {
-        GameHistories.Add(new GameHistory(opponentName, isWin, hits));
-    }
+    
 
     public GameHistoryMemento SaveHistoryToMemento()
     {

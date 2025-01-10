@@ -109,11 +109,11 @@ public class MenuState : IGameState
 
 
         // Statystyki graczy
-        Vector2 statsPosition = new Vector2(50, 350);
+        /*Vector2 statsPosition = new Vector2(50, 350);
         spriteBatch.DrawString(_font, $"{_player1.Name}: Wins: {_player1.Wins}, Hits: {_player1.Hit}", statsPosition, Color.White);
 
         statsPosition.Y += 30; // Odstęp między statystykami graczy
-        spriteBatch.DrawString(_font, $"{_player2.Name}: Wins: {_player2.Wins}, Hits: {_player2.Hit}", statsPosition, Color.White);
+        spriteBatch.DrawString(_font, $"{_player2.Name}: Wins: {_player2.Wins}, Hits: {_player2.Hit}", statsPosition, Color.White);*/
 
         spriteBatch.End();
     }

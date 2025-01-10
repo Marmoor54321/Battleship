@@ -26,12 +26,33 @@ namespace Battleship
         public List<GameHistory> GameHistories { get; private set; }
         public GameHistoryCaretaker Caretaker { get; private set; }
 
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            GameHistories = new List<GameHistory>();
+            Caretaker = new GameHistoryCaretaker();
         }
+        public void AddGameToHistory(string player1Name, string player2Name, bool player1Won, int hitsp1, int hitsp2)
+        {
+            var history = new GameHistory(player1Name, player2Name, hitsp1, hitsp2, player1Won);
+            GameHistories.Add(history);
+            Caretaker.Save(new GameHistoryMemento(GameHistories));
+        }
+
+
+        public void RestoreHistory()
+    {
+        var memento = Caretaker.Restore();
+        if (memento != null)
+        {
+            GameHistories = memento.GameHistories;
+        }
+    }
+
 
         protected override void Initialize()
         {
