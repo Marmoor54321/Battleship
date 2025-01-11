@@ -18,8 +18,8 @@ namespace Battleship
         private SpriteBatch _spriteBatch;
         private IGameState _currentState;
 
-        public Player Player1 { get; private set; }
-        public Player Player2 { get; private set; }
+        public Player Player1 { get;  set; }
+        public Player Player2 { get;  set; }
         public Player PlayerEASY { get; private set; }
         public Player PlayerEASY2 {  get; private set; }
 
@@ -68,19 +68,21 @@ namespace Battleship
         protected override void Initialize()
         {
             base.Initialize();
-            Player1 = new Player("Player 1");
-            Player2 = new Player("Player 2");
+            //Player1 = new Player("Player 1");
+            //Player2 = new Player("Player 2");
+            //base.Initialize();
+            ChangeState(new PlayerNameInputState(this));
             PlayerEASY = new Player("BOB", new EasyAI());
             PlayerEASY2 = new Player("ROB", new EasyAI());
 
-            ChangeState(new MenuState(this, Player1, Player2));
+            //ChangeState(new MenuState(this, Player1, Player2));
           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            (_currentState as MenuState)?.LoadContent();
+            (_currentState as PlayerNameInputState)?.LoadContent();
 
         }
 
@@ -104,6 +106,11 @@ namespace Battleship
             {
                 menuState.LoadContent();
             }
+            else if (newState is PlayerNameInputState nameInputState)
+            {
+                nameInputState.LoadContent();
+            }
+
             else if (newState is PlayerVsAISubMenuState subMenuState)
             {
                 subMenuState.LoadContent();
