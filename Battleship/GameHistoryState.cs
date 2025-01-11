@@ -42,11 +42,11 @@ public class GameHistoryState : IGameState
                 Vector2 startPosition = new Vector2(50, 80); // Pozycja pierwszej gry
                 for (int i = 0; i < _game.GameHistories.Count; i++)
                 {
-                    string historyText = $"{_game.GameHistories[i].GameDate}: {_game.GameHistories[i].Player1Name} vs {_game.GameHistories[i].Player2Name}, Winner: {(_game.GameHistories[i].Player1Won ? _game.GameHistories[i].Player1Name : _game.GameHistories[i].Player2Name)}";
+                    string historyText = $"{_game.GameHistories[i].GameDate}: {_game.GameHistories[i].Player1Name} (Hits: {_game.GameHistories[i].Player1Hits}) vs {_game.GameHistories[i].Player2Name} (Hits: {_game.GameHistories[i].Player2Hits}), Winner: {(_game.GameHistories[i].Player1Won ? _game.GameHistories[i].Player1Name : _game.GameHistories[i].Player2Name)}";
                     Vector2 textSize = _font.MeasureString(historyText);
 
                     if (mouseState.X > startPosition.X && mouseState.X < startPosition.X + textSize.X &&
-                        mouseState.Y > startPosition.Y && mouseState.Y < startPosition.Y + textSize.Y)
+                        mouseState.Y > startPosition.Y && mouseState.Y < startPosition.Y + textSize.Y)  
                     {
                         // Usuń wybraną grę z historii
                         _game.RemoveGameFromHistory(i);
@@ -93,7 +93,7 @@ public class GameHistoryState : IGameState
         Vector2 startPosition = new Vector2(50, 80);
         foreach (var gameHistory in _game.GameHistories)
         {
-            string historyText = $"{gameHistory.GameDate}: {gameHistory.Player1Name} vs {gameHistory.Player2Name}, Winner: {(gameHistory.Player1Won ? gameHistory.Player1Name : gameHistory.Player2Name)}";
+            string historyText = $"{gameHistory.GameDate}: {gameHistory.Player1Name} (Hits: {gameHistory.Player1Hits}) vs {gameHistory.Player2Name} (Hits: {gameHistory.Player2Hits}), Winner: {(gameHistory.Player1Won ? gameHistory.Player1Name : gameHistory.Player2Name)}";
             spriteBatch.DrawString(_font, historyText, startPosition, Color.Black);
             startPosition.Y += 30;
         }
