@@ -95,6 +95,7 @@ public class PlayerVsEasyState : IGameState
                 Console.WriteLine("Gracz 2 wygrywa!");
                 _game.PlayerEASY.AddWin();
                 _game.AddGameToHistory(_game.Player1.Name, _game.PlayerEASY.Name, false, _game.Player1.Hit, _game.PlayerEASY.Hit);
+                _game.AddPlayerToRanking(_game.PlayerEASY.Name, _game.PlayerEASY.Wins);
                 _game.Player1.ResetHits();
                 _game.PlayerEASY.ResetHits();
                 _game.ChangeState(new MenuState(_game, _game.Player1, _game.PlayerEASY));
@@ -106,6 +107,7 @@ public class PlayerVsEasyState : IGameState
                 Console.WriteLine("Gracz 1 wygrywa!");
                 _game.Player1.AddWin();
                 _game.AddGameToHistory(_game.Player1.Name, _game.PlayerEASY.Name, true, _game.Player1.Hit, _game.PlayerEASY.Hit);
+                _game.AddPlayerToRanking(_game.Player1.Name, _game.Player1.Wins);
                 _game.Player1.ResetHits();
                 _game.PlayerEASY.ResetHits();
                 _game.ChangeState(new MenuState(_game, _game.Player1, _game.PlayerEASY));

@@ -149,6 +149,7 @@ public class PlayerVsPlayerState : IGameState
                 {
                     int x = mouseState.X / 32;
                     int y = mouseState.Y / 32;
+
                     if (board1.Shoot(x, y))
                     {
                         turn2 = false;
@@ -158,6 +159,8 @@ public class PlayerVsPlayerState : IGameState
                     {
                         turn2 = true;
                     }
+                        
+                    
                 }
                 else if (mouseState.X > sec_board_start_x && mouseState.X < sec_board_end_x && mouseState.Y < 320 && turn2)
                 {

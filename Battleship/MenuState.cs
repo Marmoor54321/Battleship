@@ -36,12 +36,14 @@ public class MenuState : IGameState
         Vector2 AIVsAISize= _font.MeasureString("AI vs AI");
         Vector2 GameHistorySize = _font.MeasureString("Game History");
         Vector2 RankingSize = _font.MeasureString("Ranking");
+        Vector2 AchievemntsSize = _font.MeasureString("Achievements");
 
         Vector2 playerVsPlayerPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsPlayerSize.X) / 2, 150);
         Vector2 playerVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsAISize.X) / 2, 250);
         Vector2 AIVsAIPosition= new Vector2((_game.GraphicsDevice.Viewport.Width - AIVsAISize.X) / 2, 350);
         Vector2 GameHistoryPosition= new Vector2(672, 20);
         Vector2 RankingPosition = new Vector2(672, 60);
+        Vector2 AchievemntsPosition = new Vector2(672, 100);
 
         if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
         {
@@ -70,6 +72,11 @@ public class MenuState : IGameState
             {
                 _game.ChangeState(new RankingState(_game));
             }
+            else if (mouseState.X > AchievemntsPosition.X && mouseState.X < AchievemntsPosition.X + AchievemntsSize.X
+            && mouseState.Y > AchievemntsPosition.Y && mouseState.Y < AchievemntsPosition.Y + AchievemntsSize.Y)
+            {
+                _game.ChangeState(new AchievementsState(_game));
+            }
 
 
 
@@ -94,7 +101,8 @@ public class MenuState : IGameState
         Vector2 playerVsAISize = _font.MeasureString("Player vs AI");
         Vector2 AIVsAISize = _font.MeasureString("AI vs AI");
         Vector2 GameHistorySize = _font.MeasureString("Game History");
-        Vector2 RankingySize = _font.MeasureString("Ranking");
+        Vector2 RankingSize = _font.MeasureString("Ranking");
+        Vector2 AchievementsSize = _font.MeasureString("Achievements");
 
         // Pozycja tytułu na środku
         Vector2 titlePosition = new Vector2((_game.GraphicsDevice.Viewport.Width - titleSize.X) / 2, 50);
@@ -115,6 +123,9 @@ public class MenuState : IGameState
 
         Vector2 RankingPosition = new Vector2(672, 60);
         spriteBatch.DrawString(_font, "Ranking", RankingPosition, Color.Yellow);
+
+        Vector2 AchievemntsPosition = new Vector2(672, 100);
+        spriteBatch.DrawString(_font, "Achievements", AchievemntsPosition, Color.Yellow);
 
 
 

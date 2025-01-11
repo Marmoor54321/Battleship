@@ -12,6 +12,12 @@ namespace Battleship
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
     }
+    public interface IPlayerObserver
+    {
+        void Update(Player player, string operation, int amount);
+    }
+
+
 
     public class Game1 : Game
     {
@@ -23,6 +29,9 @@ namespace Battleship
         public Player Player2 { get;  set; }
         public Player PlayerEASY { get; private set; }
         public Player PlayerEASY2 {  get; private set; }
+
+        public Achievement AchievementWins1 {  get; set; }
+        public Achievement AchievementHits10 { get; set; }
 
         public List<GameHistory> GameHistories { get; set; } = new List<GameHistory>();
 
@@ -82,27 +91,27 @@ namespace Battleship
         }
 
         public void RestoreHistory()
-    {
-        var memento = Caretaker.Restore();
-        if (memento != null)
         {
-            GameHistories = memento.GameHistories;
+            var memento = Caretaker.Restore();
+            if (memento != null)
+                {
+                    GameHistories = memento.GameHistories;
+                }
         }
-    }
-
 
         protected override void Initialize()
         {
             base.Initialize();
             //Player1 = new Player("Player 1");
             //Player2 = new Player("Player 2");
-            //base.Initialize();
             ChangeState(new PlayerNameInputState(this));
+            AchievementWins1 = new Achievement("1 win", false);
+            AchievementHits10 = new Achievement("10 hits", false);
             PlayerEASY = new Player("BOB", new EasyAI());
-            PlayerEASY2 = new Player("ROB", new EasyAI());
+            PlayerEASY2 = new Player("ROB", new EasyAI());  
 
             //ChangeState(new MenuState(this, Player1, Player2));
-          
+
         }
 
         protected override void LoadContent()
@@ -113,9 +122,29 @@ namespace Battleship
         }
 
         protected override void Update(GameTime gameTime)
-        {
+        { 
             _currentState.Update(gameTime);
+
+            if (Player1 != null && !Player1.observers.Any(r => r is AchievementWins1))
+            {
+                Player1.AddObserver(new AchievementWins1());
+            }
+            if (Player1 != null && !Player1.observers.Any(r => r is AchievementHits10))
+            {
+                Player1.AddObserver(new AchievementHits10());
+            }
+
+            if (Player1 != null && !Player1.Achievements.Any(r => r.AchievementName == AchievementWins1.AchievementName))
+            {
+                Player1.Achievements.Add(AchievementWins1);
+            }
+            if (Player1 != null && !Player1.Achievements.Any(r => r.AchievementName == AchievementHits10.AchievementName))
+            {
+                Player1.Achievements.Add(AchievementHits10);
+            }
+
             base.Update(gameTime);
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -164,6 +193,10 @@ namespace Battleship
             else if (newState is RankingState RankingState)
             {
                 RankingState.LoadContent();
+            }
+            else if (newState is AchievementsState AchievemntsState)
+            {
+                AchievemntsState.LoadContent();
             }
 
 
