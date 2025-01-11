@@ -149,16 +149,19 @@ public class PlayerVsPlayerState : IGameState
                 {
                     int x = mouseState.X / 32;
                     int y = mouseState.Y / 32;
-
-                    if (board1.Shoot(x, y))
+                    if(!board1.GetCell(x,y).IsHit)
                     {
-                        turn2 = false;
-                        _game.Player2.AddHit();
+                        if (board1.Shoot(x, y))
+                        {
+                            turn2 = false;
+                            _game.Player2.AddHit();
+                        }
+                        else
+                        {
+                            turn2 = true;
+                        }
                     }
-                    else
-                    {
-                        turn2 = true;
-                    }
+                    
                         
                     
                 }
@@ -166,15 +169,20 @@ public class PlayerVsPlayerState : IGameState
                 {
                     int x = (mouseState.X - sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
-                    if (board2.Shoot(x, y))
+                    if (!board2.GetCell(x, y).IsHit)
                     {
-                        turn2 = true;
-                        _game.Player1.AddHit();
+                        if (board2.Shoot(x, y))
+                        {
+                            turn2 = true;
+                            _game.Player1.AddHit();
+                        }
+                        else
+                        {
+                            turn2 = false;
+                        }
+
                     }
-                    else
-                    {
-                        turn2 = false;
-                    }
+                    
                 }
                 mReleased = false;
             }

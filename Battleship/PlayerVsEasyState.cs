@@ -121,14 +121,19 @@ public class PlayerVsEasyState : IGameState
                 {
                     int x = (mouseState.X - sec_board_start_x) / 32;
                     int y = mouseState.Y / 32;
-                    if (board2.Shoot(x, y))
+                    if(!board2.GetCell(x,y).IsHit)
                     {
-                        _game.Player1.AddHit();
+                        if (board2.Shoot(x, y))
+                        {
+                            _game.Player1.AddHit();
+                        }
+                        else
+                        {
+                            turn2 = true;
+                        }
+
                     }
-                    else
-                    {
-                        turn2 = true;
-                    }
+                    
                     mReleased = false;
                 }
             }
@@ -139,15 +144,21 @@ public class PlayerVsEasyState : IGameState
                 if (_aiMovePending && _timeSinceLastAIMove >= _aiMoveDelay)
                 {
                     var (x, y) = ai.MakeMove(board1);
-                    if (board1.Shoot(x, y))
+                    if (!board1.GetCell(x, y).IsHit)
                     {
-                        _game.PlayerEASY.AddHit();
-                        // AI pozostaje w swojej turze, jeśli trafia
+                        if (board1.Shoot(x, y))
+                        {
+                            _game.PlayerEASY.AddHit();
+                            // AI pozostaje w swojej turze, jeśli trafia
+                        }
+                        else
+                        {
+                            turn2 = false; // Jeśli chybi, zmienia turę na gracza
+                        }
+
                     }
-                    else
-                    {
-                        turn2 = false; // Jeśli chybi, zmienia turę na gracza
-                    }
+                    
+                    
 
                     _timeSinceLastAIMove = 0.0; // Resetuje licznik czasu dla AI
                     _aiMovePending = false; // Ustawia ruch AI jako zakończony

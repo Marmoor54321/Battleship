@@ -88,15 +88,21 @@ public class EasyVsEasyState : IGameState
                 if (_aiMovePending && _timeSinceLastAIMove >= _aiMoveDelay)
                 {
                     var (x, y) = ai.MakeMove(board2);
-                    if (board2.Shoot(x, y))
+                    if (!board2.GetCell(x, y).IsHit)
                     {
-                        _game.PlayerEASY.AddHit();
-                        // AI pozostaje w swojej turze, jeśli trafia
+
+                        if (board2.Shoot(x, y))
+                        {
+                            _game.PlayerEASY.AddHit();
+                            // AI pozostaje w swojej turze, jeśli trafia
+                        }
+                        else
+                        {
+                            turn2 = true; // Jeśli chybi, zmienia turę na gracza
+                        }
+
                     }
-                    else
-                    {
-                        turn2 = true; // Jeśli chybi, zmienia turę na gracza
-                    }
+
 
                     _timeSinceLastAIMove = 0.0; // Resetuje licznik czasu dla AI
                     _aiMovePending = false; // Ustawia ruch AI jako zakończony
@@ -115,15 +121,20 @@ public class EasyVsEasyState : IGameState
                 if (_aiMovePending2 && _timeSinceLastAIMove2 >= _aiMoveDelay2)
                 {
                     var (x, y) = ai.MakeMove(board1);
-                    if (board1.Shoot(x, y))
+                    if (!board1.GetCell(x, y).IsHit)
                     {
-                        _game.PlayerEASY2.AddHit();
-                        // AI pozostaje w swojej turze, jeśli trafia
+                        if (board1.Shoot(x, y))
+                        {
+                            _game.PlayerEASY2.AddHit();
+                            // AI pozostaje w swojej turze, jeśli trafia
+                        }
+                        else
+                        {
+                            turn2 = false; // Jeśli chybi, zmienia turę na gracza
+                        }
+
                     }
-                    else
-                    {
-                        turn2 = false; // Jeśli chybi, zmienia turę na gracza
-                    }
+
 
                     _timeSinceLastAIMove2 = 0.0; // Resetuje licznik czasu dla AI
                     _aiMovePending2 = false; // Ustawia ruch AI jako zakończony
