@@ -35,11 +35,13 @@ public class MenuState : IGameState
         Vector2 playerVsAISize = _font.MeasureString("Player vs AI");
         Vector2 AIVsAISize= _font.MeasureString("AI vs AI");
         Vector2 GameHistorySize = _font.MeasureString("Game History");
+        Vector2 RankingSize = _font.MeasureString("Ranking");
 
         Vector2 playerVsPlayerPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsPlayerSize.X) / 2, 150);
         Vector2 playerVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsAISize.X) / 2, 250);
         Vector2 AIVsAIPosition= new Vector2((_game.GraphicsDevice.Viewport.Width - AIVsAISize.X) / 2, 350);
         Vector2 GameHistoryPosition= new Vector2(672, 20);
+        Vector2 RankingPosition = new Vector2(672, 60);
 
         if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
         {
@@ -62,6 +64,11 @@ public class MenuState : IGameState
             && mouseState.Y > GameHistoryPosition.Y && mouseState.Y < GameHistoryPosition.Y + GameHistorySize.Y)
             {
                 _game.ChangeState(new GameHistoryState(_game));
+            }
+            else if (mouseState.X > RankingPosition.X && mouseState.X < RankingPosition.X + RankingSize.X
+            && mouseState.Y > RankingPosition.Y && mouseState.Y < RankingPosition.Y + RankingSize.Y)
+            {
+                _game.ChangeState(new RankingState(_game));
             }
 
 
@@ -87,6 +94,7 @@ public class MenuState : IGameState
         Vector2 playerVsAISize = _font.MeasureString("Player vs AI");
         Vector2 AIVsAISize = _font.MeasureString("AI vs AI");
         Vector2 GameHistorySize = _font.MeasureString("Game History");
+        Vector2 RankingySize = _font.MeasureString("Ranking");
 
         // Pozycja tytułu na środku
         Vector2 titlePosition = new Vector2((_game.GraphicsDevice.Viewport.Width - titleSize.X) / 2, 50);
@@ -104,6 +112,9 @@ public class MenuState : IGameState
 
         Vector2 GameHistoryPosition = new Vector2(672, 20);
         spriteBatch.DrawString(_font, "Game History", GameHistoryPosition, Color.Yellow);
+
+        Vector2 RankingPosition = new Vector2(672, 60);
+        spriteBatch.DrawString(_font, "Ranking", RankingPosition, Color.Yellow);
 
 
 
