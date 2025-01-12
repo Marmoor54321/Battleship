@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +23,7 @@ namespace Battleship
 
     public class Game1 : Game
     {
+        private const string HistoryFilePath = "gameHistory.json"; // Ścieżka pliku z historią
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private IGameState _currentState;
@@ -49,12 +52,17 @@ namespace Battleship
             GameHistories = new List<GameHistory>();
             Rankings = new List<Ranking>();
             Caretaker = new GameHistoryCaretaker();
+
+            LoadGameHistory();
+
         }
+
         public void AddGameToHistory(string player1Name, string player2Name, bool player1Won, int hitsp1, int hitsp2)
         {
             var history = new GameHistory(player1Name, player2Name, hitsp1, hitsp2, player1Won);
             GameHistories.Add(history);
             Caretaker.Save(new GameHistoryMemento(GameHistories));
+            SaveGameHistory(); // Automatyczny zapis
         }
 
         public void AddPlayerToRanking(string playerName, int playerWins)
@@ -87,6 +95,8 @@ namespace Battleship
 
                 // Usuń grę z historii
                 GameHistories.RemoveAt(index);
+                SaveGameHistory(); // Automatyczny zapis
+
             }
         }
 
@@ -94,9 +104,40 @@ namespace Battleship
         {
             var memento = Caretaker.Restore();
             if (memento != null)
+            {
+                GameHistories = memento.GameHistories;
+                SaveGameHistory(); // Automatyczny zapis po przywróceniu
+
+            }
+        }
+        private void SaveGameHistory()
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(GameHistories);
+                File.WriteAllText(HistoryFilePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving game history: {ex.Message}");
+            }
+        }
+
+        // Wczytanie historii z pliku
+        private void LoadGameHistory()
+        {
+            try
+            {
+                if (File.Exists(HistoryFilePath))
                 {
-                    GameHistories = memento.GameHistories;
+                    var json = File.ReadAllText(HistoryFilePath);
+                    GameHistories = JsonSerializer.Deserialize<List<GameHistory>>(json) ?? new List<GameHistory>();
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading game history: {ex.Message}");
+            }
         }
 
         protected override void Initialize()
