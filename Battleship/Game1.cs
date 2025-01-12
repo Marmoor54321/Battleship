@@ -24,6 +24,8 @@ namespace Battleship
     public class Game1 : Game
     {
         private const string HistoryFilePath = "gameHistory.json"; // Ścieżka pliku z historią
+        private const string RankingFilePath = "rankings.json"; // Ścieżka pliku z rankingiem
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private IGameState _currentState;
@@ -54,6 +56,7 @@ namespace Battleship
             Caretaker = new GameHistoryCaretaker();
 
             LoadGameHistory();
+            LoadRankings();    // Wczytaj ranking graczy
 
         }
 
@@ -85,7 +88,37 @@ namespace Battleship
                 }
 
             }
+            SaveRankings(); // Automatyczny zapis po każdej zmianie
         }
+        private void SaveRankings()
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(Rankings);
+                File.WriteAllText(RankingFilePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving rankings: {ex.Message}");
+            }
+        }
+
+        private void LoadRankings()
+        {
+            try
+            {
+                if (File.Exists(RankingFilePath))
+                {
+                    var json = File.ReadAllText(RankingFilePath);
+                    Rankings = JsonSerializer.Deserialize<List<Ranking>>(json) ?? new List<Ranking>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading rankings: {ex.Message}");
+            }
+        }
+
         public void RemoveGameFromHistory(int index)
         {
             if (index >= 0 && index < GameHistories.Count)
