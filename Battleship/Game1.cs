@@ -70,25 +70,18 @@ namespace Battleship
 
         public void AddPlayerToRanking(string playerName, int playerWins)
         {
-
-            var ranking = new Ranking(playerName, playerWins);
-
-            if(!Rankings.Any(r => r.PlayerName == playerName))
+            var ranking = Rankings.FirstOrDefault(r => r.PlayerName == playerName);
+            if (ranking == null)
             {
+                ranking = new Ranking(playerName, playerWins);
                 Rankings.Add(ranking);
             }
             else
             {
-                foreach(var r in Rankings)
-                {
-                    if(r.PlayerName == playerName)
-                    {
-                        r.PlayerWins = playerWins;
-                    }
-                }
-
+                ranking.PlayerWins += playerWins; // Dodaj wygrane do istniejących
             }
-            SaveRankings(); // Automatyczny zapis po każdej zmianie
+
+            SaveRankings(); // Zapisz ranking po aktualizacji
         }
         private void SaveRankings()
         {
