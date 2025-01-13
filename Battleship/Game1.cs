@@ -23,8 +23,8 @@ namespace Battleship
 
     public class Game1 : Game
     {
-        private const string HistoryFilePath = "gameHistory.json"; // Ścieżka pliku z historią
-        private const string RankingFilePath = "rankings.json"; // Ścieżka pliku z rankingiem
+        private const string HistoryFilePath = "gameHistory.json"; 
+        private const string RankingFilePath = "rankings.json"; 
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -56,7 +56,7 @@ namespace Battleship
             Caretaker = new GameHistoryCaretaker();
 
             LoadGameHistory();
-            LoadRankings();    // Wczytaj ranking graczy
+            LoadRankings(); 
 
         }
 
@@ -65,24 +65,29 @@ namespace Battleship
             var history = new GameHistory(player1Name, player2Name, hitsp1, hitsp2, player1Won);
             GameHistories.Add(history);
             Caretaker.Save(new GameHistoryMemento(GameHistories));
-            SaveGameHistory(); // Automatyczny zapis
+            SaveGameHistory();
         }
 
         public void AddPlayerToRanking(string playerName, int playerWins)
         {
-            var ranking = Rankings.FirstOrDefault(r => r.PlayerName == playerName);
-            if (ranking == null)
+            var ranking = new Ranking(playerName, playerWins);
+            if (!Rankings.Any(r => r.PlayerName == playerName))
             {
-                ranking = new Ranking(playerName, playerWins);
                 Rankings.Add(ranking);
             }
             else
             {
-                ranking.PlayerWins += playerWins; // Dodaj wygrane do istniejących
+                foreach (var r in Rankings)
+                {
+                    if (r.PlayerName == playerName)
+                    {
+                        r.PlayerWins += 1;
+                    }
+                }
             }
-
-            SaveRankings(); // Zapisz ranking po aktualizacji
+            SaveRankings();
         }
+
         private void SaveRankings()
         {
             try
@@ -116,12 +121,11 @@ namespace Battleship
         {
             if (index >= 0 && index < GameHistories.Count)
             {
-                // Zapisz stan przed modyfikacją
+
                 Caretaker.Save(new GameHistoryMemento(GameHistories));
 
-                // Usuń grę z historii
                 GameHistories.RemoveAt(index);
-                SaveGameHistory(); // Automatyczny zapis
+                SaveGameHistory(); 
 
             }
         }
@@ -132,7 +136,7 @@ namespace Battleship
             if (memento != null)
             {
                 GameHistories = memento.GameHistories;
-                SaveGameHistory(); // Automatyczny zapis po przywróceniu
+                SaveGameHistory(); 
 
             }
         }
@@ -149,7 +153,6 @@ namespace Battleship
             }
         }
 
-        // Wczytanie historii z pliku
         private void LoadGameHistory()
         {
             try
@@ -169,16 +172,11 @@ namespace Battleship
         protected override void Initialize()
         {
             base.Initialize();
-            //Player1 = new Player("Player 1");
-            //Player2 = new Player("Player 2");
             ChangeState(new PlayerNameInputState(this));
             AchievementWins1 = new Achievement("1 win", false);
             AchievementHits10 = new Achievement("10 hits", false);
             PlayerEASY = new Player("BOB", new EasyAI());
             PlayerEASY2 = new Player("ROB", new EasyAI());  
-
-            //ChangeState(new MenuState(this, Player1, Player2));
-
         }
 
         protected override void LoadContent()
