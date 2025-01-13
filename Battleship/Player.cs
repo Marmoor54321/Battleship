@@ -9,7 +9,9 @@ public class Player
     public int Hit { get; private set; } // Liczba zestrzelonych statków
     public List<GameHistory> GameHistories { get; private set; }
     public List<Achievement> Achievements { get; private set; }
+    public List<Skin> Skins { get; private set; }
     public AIStrategy AIStrategy { get; private set; }
+
     public List<IPlayerObserver> observers = new();
 
     public Player(string name, AIStrategy aiStrategy = null)
@@ -20,6 +22,7 @@ public class Player
         Hit = 0;
         GameHistories = new List<GameHistory>();
         Achievements = new List<Achievement>();
+        Skins = new List<Skin>();
     }
     public void AddObserver(IPlayerObserver observer)
     {
@@ -77,6 +80,18 @@ public class Player
         {
             GameHistories = memento.GameHistories;
         }
+    }
+
+    public string ReturnEquippedSkinPath ()
+    {
+        foreach (var skin in Skins)
+        {
+            if(skin.IsEquipped == true)
+            {
+                return skin.SkinPath;
+            }
+        }
+        return "ShipPart.png";
     }
 
     

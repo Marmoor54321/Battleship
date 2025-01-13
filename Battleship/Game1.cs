@@ -44,6 +44,10 @@ namespace Battleship
 
         public GameHistoryCaretaker Caretaker { get; private set; }
 
+        public Skin SkinDefault { get; set; }
+        public Skin Skin1 { get; set; }
+        public Skin SkinGRG { get; set; }
+
 
 
         public Game1()
@@ -175,8 +179,14 @@ namespace Battleship
             ChangeState(new PlayerNameInputState(this));
             AchievementWins1 = new Achievement("1 win", false);
             AchievementHits10 = new Achievement("10 hits", false);
-            PlayerEASY = new Player("BOB", new EasyAI());
-            PlayerEASY2 = new Player("ROB", new EasyAI());  
+
+            PlayerEASY = new Player("BOB", EasyAI.Instance);
+            PlayerEASY2 = new Player("ROB", EasyAI.Instance);
+
+            SkinDefault = new Skin("DefaultShip", "ShipPart", true, true);
+            Skin1 = new Skin("PinkShip", "ShipPartPink", false, false);
+            SkinGRG = new Skin("GRGCell", "george", true, false);
+
         }
 
         protected override void LoadContent()
@@ -206,6 +216,20 @@ namespace Battleship
             if (Player1 != null && !Player1.Achievements.Any(r => r.AchievementName == AchievementHits10.AchievementName))
             {
                 Player1.Achievements.Add(AchievementHits10);
+            }
+
+
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinDefault.SkinName))
+            {
+                Player1.Skins.Add(SkinDefault);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == Skin1.SkinName))
+            {
+                Player1.Skins.Add(Skin1);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinGRG.SkinName))
+            {
+                Player1.Skins.Add(SkinGRG);
             }
 
             base.Update(gameTime);
@@ -262,6 +286,10 @@ namespace Battleship
             else if (newState is AchievementsState AchievemntsState)
             {
                 AchievemntsState.LoadContent();
+            }
+            else if (newState is CustomizationState CustomizationState)
+            {
+                CustomizationState.LoadContent();
             }
 
 

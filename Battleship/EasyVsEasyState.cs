@@ -32,7 +32,7 @@ public class EasyVsEasyState : IGameState
     public EasyVsEasyState(Game1 game)
     {
         _game = game;
-        ai = new EasyAI();
+        ai = EasyAI.Instance;
     }
 
     public void LoadContent()

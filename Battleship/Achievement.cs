@@ -26,6 +26,15 @@ public class AchievementWins1 : IPlayerObserver
                 if (achievement.AchievementName == "1 win")
                 {
                     achievement.IsUnlocked = true;
+
+                }
+            }
+            foreach (var skin in player.Skins)
+            {
+                if (skin.SkinName == "PinkShip")
+                {
+                    skin.IsUnlocked = true;
+
                 }
             }
         }

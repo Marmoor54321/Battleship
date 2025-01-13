@@ -9,7 +9,7 @@ public class PlayerVsPlayerState : IGameState
     private Game1 _game;
     private Board board1;
     private Board board2;
-    private Texture2D cellTexture, hitTexture, missTexture, skyTexture, shipPartTexture;
+    private Texture2D cellTexture, hitTexture, missTexture, skyTexture, shipPartTexture, shipPartTexturePlayer;
     private SpriteFont font;
 
     private bool placingShips = true;
@@ -39,6 +39,8 @@ public class PlayerVsPlayerState : IGameState
         hitTexture = _game.Content.Load<Texture2D>("hit");
         missTexture = _game.Content.Load<Texture2D>("miss");
         shipPartTexture = _game.Content.Load<Texture2D>("shippart");
+
+        shipPartTexturePlayer = _game.Content.Load<Texture2D>(_game.Player1.ReturnEquippedSkinPath());
         skyTexture = _game.Content.Load<Texture2D>("sky");
         font = _game.Content.Load<SpriteFont>("Fonts/font1");
     }
@@ -217,7 +219,7 @@ public class PlayerVsPlayerState : IGameState
             {
                 Cell cell = board1.GetCell(x, y);
                 Vector2 position = new Vector2(x * 32, y * 32);
-                spriteBatch.Draw(cell.IsHit ? hitTexture : cell.IsMiss ? missTexture : cell.HasShip ? shipPartTexture : cellTexture, position, Color.White);
+                spriteBatch.Draw(cell.IsHit ? hitTexture : cell.IsMiss ? missTexture : cell.HasShip ? shipPartTexturePlayer : cellTexture, position, Color.White);
             }
         }
 
