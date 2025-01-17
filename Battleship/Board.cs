@@ -97,7 +97,7 @@ public class Board
 
             if (x < 0 || x >= Size || y < 0 || y >= Size || cells[x, y].HasShip)
             {
-                return false; // Komórka zajęta przez statek
+                return false; 
             }
 
             // Sprawdzanie sąsiadujących komórek (również po rogach)
@@ -112,14 +112,14 @@ public class Board
                     {
                         if (cells[neighborX, neighborY].HasShip)
                         {
-                            return false; // Sąsiednia komórka zajęta przez statek
+                            return false; 
                         }
                     }
                 }
             }
         }
 
-        return true; // Wszystkie komórki są wolne
+        return true; 
     }
 
     public List<Ship> GetShips()
@@ -136,22 +136,22 @@ public bool Shoot(int x, int y)
 {
     if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
     {
-        return false; // Wyjście, jeśli strzał jest poza planszą.
+        return false; 
     }
 
     var cell = cells[x, y];
     if (cell.IsHit || cell.IsMiss)
     {
-        return true; // Pole już trafione lub oznaczone jako chybione.
+        return true; 
     }
 
     if (cell.ShipComponent != null)
     {
         cell.Shoot();
-        return true; // Trafiono statek.
+        return true; 
     }
 
-    cell.IsMiss = true; // Strzał chybiony.
+    cell.IsMiss = true; 
     return false;
 }
 

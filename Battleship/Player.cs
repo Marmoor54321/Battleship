@@ -4,9 +4,9 @@ using Battleship;
 
 public class Player
 {
-    public string Name { get; private set; } // Imię gracza
-    public int Wins { get; private set; } // Liczba wygranych meczów
-    public int Hit { get; private set; } // Liczba zestrzelonych statków
+    public string Name { get; private set; } 
+    public int Wins { get; private set; } 
+    public int Hit { get; private set; } 
     public List<GameHistory> GameHistories { get; private set; }
     public List<Achievement> Achievements { get; private set; }
     public List<Skin> Skins { get; private set; }
@@ -42,21 +42,21 @@ public class Player
             observer.Update(this, operation, amount);
         }
     }
-    // Metoda zwiększająca liczbę wygranych meczów
+    
     public void AddWin()
     {
         Wins++;
         NotifyObservers("Win", Wins);
     }
 
-    // Metoda zwiększająca liczbę zestrzelonych statków
+    
     public void AddHit()
     {
         Hit++;
         NotifyObservers("Hit", Hit);
     }
 
-    // Metoda resetująca statystyki gracza
+    
     public void ResetHits()
     {
         Hit = 0;

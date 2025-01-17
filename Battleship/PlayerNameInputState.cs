@@ -16,7 +16,7 @@ public class PlayerNameInputState : IGameState
     public PlayerNameInputState(Game1 game)
     {
         _game = game;
-        _previousKeyboardState = Keyboard.GetState(); // Inicjalizacja poprzedniego stanu klawiatury
+        _previousKeyboardState = Keyboard.GetState(); 
     }
 
     public void LoadContent()
@@ -30,7 +30,7 @@ public class PlayerNameInputState : IGameState
 
         foreach (var key in keyboardState.GetPressedKeys())
         {
-            // Wprowadź literę tylko jeśli klawisz nie był wciśnięty w poprzedniej klatce
+            
             if (_previousKeyboardState.IsKeyUp(key))
             {
                 if (key == Keys.Back)
@@ -43,10 +43,10 @@ public class PlayerNameInputState : IGameState
                 else if (key == Keys.Enter)
                 {
                     if (_isPlayer1)
-                        _isPlayer1 = false; // Zmiana na drugiego gracza
+                        _isPlayer1 = false; 
                     else
                     {
-                        // Po wprowadzeniu nazw przejdź do menu
+                        
                         _game.Player1 = new Player(_player1Name);
                         _game.Player2 = new Player(_player2Name);
                         _game.ChangeState(new MenuState(_game, _game.Player1, _game.Player2));
@@ -66,7 +66,7 @@ public class PlayerNameInputState : IGameState
             }
         }
 
-        // Zapisz obecny stan klawiatury do użycia w następnej klatce
+       
         _previousKeyboardState = keyboardState;
     }
 

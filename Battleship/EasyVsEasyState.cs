@@ -20,14 +20,13 @@ public class EasyVsEasyState : IGameState
 
     const int sec_board_start_x = 352;
 
-    private double _aiMoveDelay = 1.0; // Opóźnienie AI w sekundach
+    private double _aiMoveDelay = 1.0; 
     private double _timeSinceLastAIMove = 0.0;
-    private bool _aiMovePending = true; // Czy AI ma wykonać ruch
+    private bool _aiMovePending = true; 
 
-    private double _aiMoveDelay2 = 1.0; // Opóźnienie AI w sekundach
+    private double _aiMoveDelay2 = 1.0; 
     private double _timeSinceLastAIMove2 = 0.0;
-    private bool _aiMovePending2 = true; // Czy AI ma wykonać ruch
-
+    private bool _aiMovePending2 = true; 
 
     public EasyVsEasyState(Game1 game)
     {
@@ -94,27 +93,27 @@ public class EasyVsEasyState : IGameState
                         if (board2.Shoot(x, y))
                         {
                             _game.PlayerEASY.AddHit();
-                            // AI pozostaje w swojej turze, jeśli trafia
+                            
                         }
                         else
                         {
-                            turn2 = true; // Jeśli chybi, zmienia turę na gracza
+                            turn2 = true; 
                         }
 
                     }
 
 
-                    _timeSinceLastAIMove = 0.0; // Resetuje licznik czasu dla AI
-                    _aiMovePending = false; // Ustawia ruch AI jako zakończony
+                    _timeSinceLastAIMove = 0.0; 
+                    _aiMovePending = false; 
                 }
 
-                // Jeśli ruch AI zakończony, ustaw flagę na nowy ruch w przyszłości
+                
                 if (!_aiMovePending && !turn2)
                 {
-                    _aiMovePending = true; // AI będzie gotowe do kolejnego ruchu w przyszłej turze
+                    _aiMovePending = true; 
                 }
             }
-            else // Ruch AI
+            else 
             {
                 _timeSinceLastAIMove2 += gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -126,24 +125,24 @@ public class EasyVsEasyState : IGameState
                         if (board1.Shoot(x, y))
                         {
                             _game.PlayerEASY2.AddHit();
-                            // AI pozostaje w swojej turze, jeśli trafia
+                            
                         }
                         else
                         {
-                            turn2 = false; // Jeśli chybi, zmienia turę na gracza
+                            turn2 = false; 
                         }
 
                     }
 
 
-                    _timeSinceLastAIMove2 = 0.0; // Resetuje licznik czasu dla AI
-                    _aiMovePending2 = false; // Ustawia ruch AI jako zakończony
+                    _timeSinceLastAIMove2 = 0.0; 
+                    _aiMovePending2 = false; 
                 }
 
-                // Jeśli ruch AI zakończony, ustaw flagę na nowy ruch w przyszłości
+                
                 if (!_aiMovePending2 && turn2)
                 {
-                    _aiMovePending2 = true; // AI będzie gotowe do kolejnego ruchu w przyszłej turze
+                    _aiMovePending2 = true; 
                 }
 
             }

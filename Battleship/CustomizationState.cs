@@ -39,8 +39,8 @@ public class CustomizationState : IGameState
             }
             else
             {
-                // Sprawdź, czy kliknięto grę w historii
-                Vector2 startPosition = new Vector2(50, 80); // Pozycja pierwszej gry
+                // Czy kliknięto grę w historii
+                Vector2 startPosition = new Vector2(50, 80); 
                 for (int i = 0; i < _game.Player1.Skins.Count; i++)
                 {
                     string skinText = $"{_game.Player1.Skins[i].SkinName}: Unloced: {_game.Player1.Skins[i].IsUnlocked} Equipped: {_game.Player1.Skins[i].IsEquipped}";
@@ -59,7 +59,7 @@ public class CustomizationState : IGameState
                         break;
                     }
 
-                    startPosition.Y += 30; // Przesuń pozycję do następnej gry
+                    startPosition.Y += 30; 
                 }
             }
 

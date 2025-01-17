@@ -27,9 +27,9 @@ public class PlayerVsEasyState : IGameState
     const int sec_board_start_x = 352;
     const int sec_board_end_x = 672;
 
-    private double _aiMoveDelay = 1.0; // Opóźnienie AI w sekundach
+    private double _aiMoveDelay = 1.0; 
     private double _timeSinceLastAIMove = 0.0;
-    private bool _aiMovePending = true; // Czy AI ma wykonać ruch
+    private bool _aiMovePending = true; 
 
 
     public PlayerVsEasyState(Game1 game)
@@ -50,7 +50,7 @@ public class PlayerVsEasyState : IGameState
         skyTexture = _game.Content.Load<Texture2D>("sky");
         font = _game.Content.Load<SpriteFont>("Fonts/font1");
 
-        ai.PlaceFleet(board2); // AI losowo rozmieszcza statki na swojej planszy
+        ai.PlaceFleet(board2); 
     }
 
     public void Update(GameTime gameTime)
@@ -92,7 +92,7 @@ public class PlayerVsEasyState : IGameState
         {
             if (board1.AreAllShipsSunk())
             {
-                Console.WriteLine("Gracz 2 wygrywa!");
+                Console.WriteLine("Gracz 2 wygrywa");
                 _game.PlayerEASY.AddWin();
                 _game.AddGameToHistory(_game.Player1.Name, _game.PlayerEASY.Name, false, _game.Player1.Hit, _game.PlayerEASY.Hit);
                 _game.AddPlayerToRanking(_game.PlayerEASY.Name, _game.PlayerEASY.Wins);
@@ -104,7 +104,7 @@ public class PlayerVsEasyState : IGameState
 
             if (board2.AreAllShipsSunk())
             {
-                Console.WriteLine("Gracz 1 wygrywa!");
+                Console.WriteLine("Gracz 1 wygrywa");
                 _game.Player1.AddWin();
                 _game.AddGameToHistory(_game.Player1.Name, _game.PlayerEASY.Name, true, _game.Player1.Hit, _game.PlayerEASY.Hit);
                 _game.AddPlayerToRanking(_game.Player1.Name, _game.Player1.Wins);
@@ -114,7 +114,7 @@ public class PlayerVsEasyState : IGameState
                 return;
             }
 
-            if (!turn2) // Ruch gracza
+            if (!turn2) 
             {
 
                 if (mouseState.LeftButton == ButtonState.Pressed && mReleased && mouseState.X > sec_board_start_x && mouseState.X < sec_board_end_x && mouseState.Y < 320)
@@ -149,25 +149,25 @@ public class PlayerVsEasyState : IGameState
                         if (board1.Shoot(x, y))
                         {
                             _game.PlayerEASY.AddHit();
-                            // AI pozostaje w swojej turze, jeśli trafia
+                            
                         }
                         else
                         {
-                            turn2 = false; // Jeśli chybi, zmienia turę na gracza
+                            turn2 = false; 
                         }
 
                     }
                     
                     
 
-                    _timeSinceLastAIMove = 0.0; // Resetuje licznik czasu dla AI
-                    _aiMovePending = false; // Ustawia ruch AI jako zakończony
+                    _timeSinceLastAIMove = 0.0; 
+                    _aiMovePending = false; 
                 }
 
-                // Jeśli ruch AI zakończony, ustaw flagę na nowy ruch w przyszłości
+                
                 if (!_aiMovePending && turn2)
                 {
-                    _aiMovePending = true; // AI będzie gotowe do kolejnego ruchu w przyszłej turze
+                    _aiMovePending = true; 
                 }
 
             }

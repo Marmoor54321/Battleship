@@ -185,7 +185,7 @@ namespace Battleship
 
             SkinDefault = new Skin("DefaultShip", "ShipPart", true, true);
             Skin1 = new Skin("PinkShip", "ShipPartPink", false, false);
-            SkinGRG = new Skin("GRGCell", "george", true, false);
+            SkinGRG = new Skin("GRGCell", "george", false, false);
 
         }
 

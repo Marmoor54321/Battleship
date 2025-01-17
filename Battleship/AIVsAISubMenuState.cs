@@ -41,8 +41,8 @@ public class AIVsAISubMenuState : IGameState
             else if (mouseState.X > hardPosition.X && mouseState.X < hardPosition.X + hardSize.X
                 && mouseState.Y > hardPosition.Y && mouseState.Y < hardPosition.Y + hardSize.Y)
             {
-                Console.WriteLine("Hard mode selected!");
-                // TODO: Transition to Hard AI gameplay state
+                
+                // tu bedzie hard mode 
             }
 
             mReleased = false;

@@ -42,7 +42,7 @@ public class PlayerVsAISubMenuState : IGameState
                 && mouseState.Y > hardPosition.Y && mouseState.Y < hardPosition.Y + hardSize.Y)
             {
                 Console.WriteLine("Hard mode selected!");
-                // TODO: Transition to Hard AI gameplay state
+                // hard mode
             }
 
             mReleased = false;

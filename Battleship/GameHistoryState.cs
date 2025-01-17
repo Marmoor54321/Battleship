@@ -38,8 +38,8 @@ public class GameHistoryState : IGameState
             }
             else
             {
-                // Sprawdź, czy kliknięto grę w historii
-                Vector2 startPosition = new Vector2(50, 80); // Pozycja pierwszej gry
+                
+                Vector2 startPosition = new Vector2(50, 80); 
                 for (int i = 0; i < _game.GameHistories.Count; i++)
                 {
                     string historyText = $"{_game.GameHistories[i].GameDate}: {_game.GameHistories[i].Player1Name} (Hits: {_game.GameHistories[i].Player1Hits}) vs {_game.GameHistories[i].Player2Name} (Hits: {_game.GameHistories[i].Player2Hits}), Winner: {(_game.GameHistories[i].Player1Won ? _game.GameHistories[i].Player1Name : _game.GameHistories[i].Player2Name)}";
@@ -48,12 +48,12 @@ public class GameHistoryState : IGameState
                     if (mouseState.X > startPosition.X && mouseState.X < startPosition.X + textSize.X &&
                         mouseState.Y > startPosition.Y && mouseState.Y < startPosition.Y + textSize.Y)  
                     {
-                        // Usuń wybraną grę z historii
+                        
                         _game.RemoveGameFromHistory(i);
                         break;
                     }
 
-                    startPosition.Y += 30; // Przesuń pozycję do następnej gry
+                    startPosition.Y += 30; 
                 }
             }
 
@@ -89,7 +89,7 @@ public class GameHistoryState : IGameState
         spriteBatch.DrawString(_font, "Click record to delete. Press Z to undo.", new Vector2(50, 40), Color.Black);
 
 
-        // Wyświetlanie historii gier
+        
         Vector2 startPosition = new Vector2(50, 80);
         foreach (var gameHistory in _game.GameHistories)
         {

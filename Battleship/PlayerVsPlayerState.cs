@@ -134,7 +134,6 @@ public class PlayerVsPlayerState : IGameState
                 _game.AddGameToHistory(_game.Player1.Name, _game.Player2.Name, true, _game.Player1.Hit, _game.Player2.Hit);
                 _game.AddPlayerToRanking(_game.Player1.Name, _game.Player1.Wins);
 
-                // Zapis historii gry
                 var caretaker = new GameHistoryCaretaker();
                 caretaker.Save(_game.Player1.SaveHistoryToMemento());
                 _game.Player1.ResetHits();
