@@ -7,6 +7,7 @@ public class Player
     public string Name { get; private set; } 
     public int Wins { get; private set; } 
     public int Hit { get; private set; } 
+    public int Coins { get; private set; }
     public List<GameHistory> GameHistories { get; private set; }
     public List<Achievement> Achievements { get; private set; }
     public List<Skin> Skins { get; private set; }
@@ -20,6 +21,7 @@ public class Player
         AIStrategy = aiStrategy;
         Wins = 0;
         Hit = 0;
+        Coins = 0;
         GameHistories = new List<GameHistory>();
         Achievements = new List<Achievement>();
         Skins = new List<Skin>();
@@ -56,7 +58,11 @@ public class Player
         NotifyObservers("Hit", Hit);
     }
 
-    
+    public void AddCoins(int amount)
+    {
+        Coins += amount;
+    }
+
     public void ResetHits()
     {
         Hit = 0;

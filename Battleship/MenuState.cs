@@ -38,6 +38,8 @@ public class MenuState : IGameState
         Vector2 RankingSize = _font.MeasureString("Ranking");
         Vector2 AchievemntsSize = _font.MeasureString("Achievements");
         Vector2 CustomizationSize = _font.MeasureString("Customization");
+        Vector2 ShopSize = _font.MeasureString("Shop");
+
 
         Vector2 playerVsPlayerPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsPlayerSize.X) / 2, 150);
         Vector2 playerVsAIPosition = new Vector2((_game.GraphicsDevice.Viewport.Width - playerVsAISize.X) / 2, 250);
@@ -46,6 +48,8 @@ public class MenuState : IGameState
         Vector2 RankingPosition = new Vector2(672, 60);
         Vector2 AchievemntsPosition = new Vector2(672, 100);
         Vector2 CustomizationPosition = new Vector2(672, 140);
+        Vector2 ShopPosition = new Vector2(672, 180);
+
 
         if (mouseState.LeftButton == ButtonState.Pressed && mReleased)
         {
@@ -84,6 +88,11 @@ public class MenuState : IGameState
             {
                 _game.ChangeState(new CustomizationState(_game));
             }
+            else if (mouseState.X > ShopPosition.X && mouseState.X < ShopPosition.X + CustomizationSize.X
+            && mouseState.Y > ShopPosition.Y && mouseState.Y < ShopPosition.Y + CustomizationSize.Y)
+            {
+                _game.ChangeState(new ShopState(_game));
+            }
 
 
 
@@ -111,6 +120,8 @@ public class MenuState : IGameState
         Vector2 RankingSize = _font.MeasureString("Ranking");
         Vector2 AchievementsSize = _font.MeasureString("Achievements");
         Vector2 CustomizationSize = _font.MeasureString("Customization");
+        Vector2 ShopSize = _font.MeasureString("Schop");
+        Vector2 CoinSize = _font.MeasureString("Coins: ");
 
         // Pozycja tytułu na środku
         Vector2 titlePosition = new Vector2((_game.GraphicsDevice.Viewport.Width - titleSize.X) / 2, 50);
@@ -137,6 +148,12 @@ public class MenuState : IGameState
 
         Vector2 CustomizationPosition = new Vector2(672, 140);
         spriteBatch.DrawString(_font, "Customization", CustomizationPosition, Color.Yellow);
+
+        Vector2 ShopPosition = new Vector2(672, 180);
+        spriteBatch.DrawString(_font, "Shop", ShopPosition, Color.Yellow);
+
+        Vector2 CoinPosition = new Vector2(10, 10);
+        spriteBatch.DrawString(_font, "Coins:" + _game.Player1.Coins, CoinPosition, Color.Yellow);
 
 
         spriteBatch.End();

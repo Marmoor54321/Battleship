@@ -131,6 +131,7 @@ public class PlayerVsPlayerState : IGameState
             {
                 Console.WriteLine("Gracz 1 wygrywa!");
                 _game.Player1.AddWin();
+                _game.Player1.AddCoins(1000);
                 _game.AddGameToHistory(_game.Player1.Name, _game.Player2.Name, true, _game.Player1.Hit, _game.Player2.Hit);
                 _game.AddPlayerToRanking(_game.Player1.Name, _game.Player1.Wins);
 
@@ -176,6 +177,7 @@ public class PlayerVsPlayerState : IGameState
                         {
                             turn2 = true;
                             _game.Player1.AddHit();
+                            _game.Player1.AddCoins(5);
                         }
                         else
                         {

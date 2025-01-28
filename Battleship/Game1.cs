@@ -47,6 +47,10 @@ namespace Battleship
         public Skin SkinDefault { get; set; }
         public Skin Skin1 { get; set; }
         public Skin SkinGRG { get; set; }
+        
+        public LootBox LootBox1 { get; set; }
+
+        public List<LootBox> LootBoxes { get; set; } = new List<LootBox>();
 
 
 
@@ -183,9 +187,15 @@ namespace Battleship
             PlayerEASY = new Player("BOB", EasyAI.Instance);
             PlayerEASY2 = new Player("ROB", EasyAI.Instance);
 
-            SkinDefault = new Skin("DefaultShip", "ShipPart", true, true);
-            Skin1 = new Skin("PinkShip", "ShipPartPink", false, false);
-            SkinGRG = new Skin("GRGCell", "george", false, false);
+            SkinDefault = new Skin("DefaultShip", "ShipPart", true, true,0);
+            Skin1 = new Skin("PinkShip", "ShipPartPink", false, false,50);
+            SkinGRG = new Skin("GRGCell", "george", false, false,5);
+
+            LootBox1 = new LootBox("Basic LootBox", 100);
+            LootBox1.AddItem(Skin1);
+            LootBox1.AddItem(SkinGRG);
+
+            LootBoxes.Add(LootBox1);
 
         }
 
@@ -290,6 +300,10 @@ namespace Battleship
             else if (newState is CustomizationState CustomizationState)
             {
                 CustomizationState.LoadContent();
+            }
+            else if (newState is ShopState ShopState)
+            {
+                ShopState.LoadContent();
             }
 
 
