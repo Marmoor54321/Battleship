@@ -4,6 +4,7 @@ using Battleship;
 
 public class Player
 {
+
     public string Name { get; private set; } 
     public int Wins { get; private set; } 
     public int Hit { get; private set; } 
@@ -17,6 +18,7 @@ public class Player
 
     public Player(string name, AIStrategy aiStrategy = null)
     {
+
         Name = name;
         AIStrategy = aiStrategy;
         Wins = 0;

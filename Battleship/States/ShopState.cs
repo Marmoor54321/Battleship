@@ -101,6 +101,7 @@ public class ShopState : IGameState
         }
     }
 
+
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
@@ -109,11 +110,15 @@ public class ShopState : IGameState
 
         Vector2 MenuSize = _font.MeasureString("Menu");
         Vector2 MenuPosition = new Vector2(700, 450);
+        Vector2 CoinSize = _font.MeasureString("Coins: ");
         spriteBatch.DrawString(_font, "Menu", MenuPosition, Color.Yellow);
 
-        spriteBatch.DrawString(_font, "LootBoxes:", new Vector2(50, 20), Color.Black);
+        Vector2 CoinPosition = new Vector2(10, 10);
+        spriteBatch.DrawString(_font, "Coins:" + _game.Player1.Coins, CoinPosition, Color.Yellow);
 
-        Vector2 startPosition = new Vector2(50, 80);
+        spriteBatch.DrawString(_font, "LootBoxes:", new Vector2(80, 20), Color.Black);
+
+        Vector2 startPosition = new Vector2(80, 80);
         foreach (var LootBox in _game.LootBoxes)
         {
             string boxText = $"Name: {LootBox.LootBoxName} Price: {LootBox.Price}";

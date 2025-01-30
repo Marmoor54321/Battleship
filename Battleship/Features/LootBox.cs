@@ -28,13 +28,11 @@ public class LootBox
 
     public Skin Open()
     {
-        // Oblicz sumę rzadkości
+       
         int totalRarity = _lootItems.Sum(item => item.Rarity);
 
-        // Wylosuj liczbę z zakresu od 0 do totalRarity
         int roll = _random.Next(0, totalRarity);
 
-        // Przechodzimy przez przedmioty i sprawdzamy, który "wypadł"
         int current = 0;
         foreach (var item in _lootItems)
         {
@@ -45,7 +43,6 @@ public class LootBox
             }
         }
 
-        // W razie błędu (teoretycznie nie powinno się zdarzyć)
         return null;
     }
 }

@@ -9,10 +9,12 @@ using System.Linq;
 
 namespace Battleship
 {
+
     public interface IGameState
     {
         void Update(GameTime gameTime);
         void Draw(SpriteBatch spriteBatch);
+
     }
     public interface IPlayerObserver
     {
@@ -47,7 +49,11 @@ namespace Battleship
         public Skin SkinDefault { get; set; }
         public Skin Skin1 { get; set; }
         public Skin SkinGRG { get; set; }
-        
+        public Skin SkinFlower { get; set; }
+        public Skin SkinAmogus { get; set; }
+        public Skin SkinFace { get; set; }
+        public Skin SkinVon { get; set; }
+
         public LootBox LootBox1 { get; set; }
 
         public List<LootBox> LootBoxes { get; set; } = new List<LootBox>();
@@ -176,7 +182,6 @@ namespace Battleship
                 Console.WriteLine($"Error loading game history: {ex.Message}");
             }
         }
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -188,12 +193,20 @@ namespace Battleship
             PlayerEASY2 = new Player("ROB", EasyAI.Instance);
 
             SkinDefault = new Skin("DefaultShip", "ShipPart", true, true,0);
-            Skin1 = new Skin("PinkShip", "ShipPartPink", false, false,50);
-            SkinGRG = new Skin("GRGCell", "george", false, false,5);
+            Skin1 = new Skin("PinkShip", "ShipPartPink", false, false,75);
+            SkinGRG = new Skin("GRGCell", "george", false, false,1);
+            SkinFlower = new Skin("FlowerShip", "ShipPartFlower", false, false, 25);
+            SkinAmogus = new Skin("AmogusShip", "ShipPartAmongus", false, false, 10);
+            SkinFace = new Skin("FaceShip", "ShipPartFace", false, false, 50);
+            SkinVon = new Skin("VonShip", "KingVon", false, false, 5);
 
             LootBox1 = new LootBox("Basic LootBox", 100);
             LootBox1.AddItem(Skin1);
             LootBox1.AddItem(SkinGRG);
+            LootBox1.AddItem(SkinFlower);
+            LootBox1.AddItem(SkinAmogus);
+            LootBox1.AddItem(SkinFace);
+            LootBox1.AddItem(SkinVon);
 
             LootBoxes.Add(LootBox1);
 
@@ -240,6 +253,22 @@ namespace Battleship
             if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinGRG.SkinName))
             {
                 Player1.Skins.Add(SkinGRG);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinFlower.SkinName))
+            {
+                Player1.Skins.Add(SkinFlower);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinAmogus.SkinName))
+            {
+                Player1.Skins.Add(SkinAmogus);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinFace.SkinName))
+            {
+                Player1.Skins.Add(SkinFace);
+            }
+            if (Player1 != null && !Player1.Skins.Any(r => r.SkinName == SkinVon.SkinName))
+            {
+                Player1.Skins.Add(SkinVon);
             }
 
             base.Update(gameTime);
