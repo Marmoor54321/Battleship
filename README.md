@@ -3,7 +3,7 @@
 Gra Battleship stworzona w celu nauki praktycznego wykorzystania wzorców projektowych.
 ![image](https://github.com/user-attachments/assets/cbb1f39e-4b83-4f0d-a89b-44acd57d2ac3)
 # Spis treści
-- [O projekcie](#oprojekcie)
+- [O projekcie](#o-projekcie)
 - [Funkcjonalności](#funkcjonalności)
 - [Instalacja](#instalacja)
 - [Użyte wzorce](#wzorce)
