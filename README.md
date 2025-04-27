@@ -8,7 +8,7 @@ Gra Battleship stworzona w celu nauki praktycznego wykorzystania wzorców projek
 - [Instalacja](#instalacja)
 - [Użyte wzorce](#wzorce)
 ## O projekcie
-Gra **Battleship** została stworzona w ramach przedmiotu akademickiego,
+Gra **Battleship** napisana w C# została stworzona w ramach przedmiotu akademickiego,
 którego celem było praktyczne zastosowanie wzorców projektowych w programowaniu.
 Projekt umożliwił zgłębienie zasad projektowania wzorców, takich jak Observer, Composite czy Memento, oraz ich implementację w rzeczywistej aplikacji. Ze względu na lokalny charakter gry oraz ułatwienie testowania, statki obu graczy są widoczne na planszy.
 ## Funkcjonalności  
